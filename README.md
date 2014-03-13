@@ -14,9 +14,14 @@
 *注意： 需要事先配置好系统环境变量 CATALINA_HOME*
 
 # 使用
-./clean && ./compile && ./deploy
+
+## 初始化数据库
+导入数据库脚本 sql/mysql.sql
+
+## 构建、部署
+`./clean && ./compile && ./deploy`
 
 或者同时指定 Tomcat 的路径
 
-./clean && ./compile && CATALINA_HOME=~/apache-tomcat-7.0.50 ./deploy
+`./clean && ./compile && CATALINA_HOME=~/apache-tomcat-7.0.50 ./deploy`
 
