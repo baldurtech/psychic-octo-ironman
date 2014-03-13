@@ -1,5 +1,7 @@
 #!/bin/sh
 
+test -z "$CATALINA_HOME" && echo "CATALINA_HOME not set." && exit 1
+
 rm -r -f $CATALINA_HOME/webapps/hellojdbc
 
 cp -r src/main/webapp $CATALINA_HOME/webapps/hellojdbc
