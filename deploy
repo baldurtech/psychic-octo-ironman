@@ -6,3 +6,6 @@ rm -r -f $CATALINA_HOME/webapps/hellojdbc
 
 cp -r src/main/webapp $CATALINA_HOME/webapps/hellojdbc
 cp -r target/classes $CATALINA_HOME/webapps/hellojdbc/WEB-INF/
+
+mkdir $CATALINA_HOME/webapps/hellojdbc/WEB-INF/lib/
+cp -r lib/mysql-connector-java-5.1.24.jar $CATALINA_HOME/webapps/hellojdbc/WEB-INF/lib/
