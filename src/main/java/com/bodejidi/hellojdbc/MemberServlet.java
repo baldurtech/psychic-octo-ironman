@@ -11,4 +11,10 @@ public class MemberServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.getWriter().println("Member Servlet");
     }
+
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        resp.getWriter().println(req.getParameter("first_name")
+                                 + " "
+                                 +req.getParameter("last_name"));
+    }
 }
