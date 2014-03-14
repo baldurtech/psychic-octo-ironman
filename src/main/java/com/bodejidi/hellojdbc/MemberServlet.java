@@ -32,8 +32,10 @@ public class MemberServlet extends HttpServlet {
         Statement stmt = null;
 
         try {
-            conn = getConnection();
-
+            conn =
+                DriverManager.getConnection("jdbc:mysql://localhost/hellojdbc?"
+                                            + "user=root"
+                                            + "&password=");
             stmt = conn.createStatement();
             String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) "
                 + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
@@ -70,11 +72,5 @@ public class MemberServlet extends HttpServlet {
                 conn = null;
             }
         }
-    }
-
-    private Connection getConnection() {
-        DriverManager.getConnection("jdbc:mysql://localhost/hellojdbc?"
-                                    + "user=root"
-                                    + "&password=");
     }
 }
