@@ -44,7 +44,9 @@ public class MemberServlet extends HttpServlet {
                 String lastName = rs.getString("last_name");
                 resp.getWriter().println("<tr><td>" + id + "</td><td>" + firstName + " " + lastName + "</td></tr>\n");
             }
-            resp.getWriter().println("</table></body></html>");
+            resp.getWriter().println("</table>");
+            resp.getWriter().println("<p><a href=\".\">Add member</a></p>");
+            resp.getWriter().println("</body></html>");
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
