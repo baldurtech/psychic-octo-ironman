@@ -87,6 +87,8 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        resp.setContentType("text/html; charset=UTF-8");
+
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
 
@@ -112,6 +114,7 @@ public class MemberServlet extends HttpServlet {
             System.out.println("SQL: " + sql);
             stmt.execute(sql);
             resp.getWriter().println("Add " + firstName + " " + lastName + " success!");
+            resp.getWriter().println("<br/><a href=\"\">Member List</a>");
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
