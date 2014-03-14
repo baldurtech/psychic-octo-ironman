@@ -37,7 +37,7 @@ public class MemberServlet extends HttpServlet {
             String sql = "SELECT * from member";
             System.out.println("SQL: " + sql);
             rs = stmt.executeQuery(sql);
-            resp.getWriter().println("<html><head><title>Member List</title></head><body><h1>Member List</h1><table><tr><td>ID</td><td>Name</td></tr>\n");
+            resp.getWriter().println("<html><head><title>Member List</title></head><body><h1>Member List</h1><table border=\"1\"><tr><td>ID</td><td>Name</td></tr>\n");
             while(rs.next()) {
                 Long id = rs.getLong("id");
                 String firstName = rs.getString("first_name");
