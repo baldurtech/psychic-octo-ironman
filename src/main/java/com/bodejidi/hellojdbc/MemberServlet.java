@@ -67,6 +67,7 @@ public class MemberServlet extends HttpServlet {
                 resp.getWriter().println("      <tr><td>First Name</td><td><input type=\"text\" name=\"first_name\" value=\"" + firstName + "\" /></td></tr>\n");
                 resp.getWriter().println("      <tr><td>Last Name</td><td><input type=\"text\" name=\"last_name\" value=\"" + lastName + "\" /></td></tr>\n");
                 resp.getWriter().println("    </table>");
+                resp.getWriter().println("    <input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
                 resp.getWriter().println("    <input type=\"submit\" value=\"Update\" />");
                 resp.getWriter().println("  </form>");
                 resp.getWriter().println("  <p><a href=\"member\">Member list</a></p>");
@@ -116,6 +117,7 @@ public class MemberServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType("text/html; charset=UTF-8");
 
+        String id = req.getParameter("id");
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
 
@@ -136,12 +138,21 @@ public class MemberServlet extends HttpServlet {
                                             + "user=root"
                                             + "&password=");
             stmt = conn.createStatement();
-            String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) "
-                + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-            System.out.println("SQL: " + sql);
-            stmt.execute(sql);
-            resp.getWriter().println("Add " + firstName + " " + lastName + " success!");
-            resp.getWriter().println("<br/><a href=\"\">Member List</a>");
+
+            if(id == null) {
+                String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) "
+                    + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+                System.out.println("SQL: " + sql);
+                stmt.execute(sql);
+                resp.getWriter().println("Add " + firstName + " " + lastName + " success!");
+                resp.getWriter().println("<br/><a href=\"\">Member List</a>");
+            } else {
+                String sql = "update member set first_name='" + firstName + "', last_name='" + lastName + "' where id="+id;
+                System.out.println("SQL: " + sql);
+                stmt.execute(sql);
+                resp.getWriter().println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
+                resp.getWriter().println("<br/><a href=\"\">Member List</a>");
+            }
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
