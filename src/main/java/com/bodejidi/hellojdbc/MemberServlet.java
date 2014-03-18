@@ -61,11 +61,14 @@ public class MemberServlet extends HttpServlet {
 
                 resp.getWriter().println("<html><head><title>Member</title></head><body>"
                                          + "  <h1>Member</h1>"
-                                         + "  <table border=\"1\">\n");
-                resp.getWriter().println("    <tr><td>ID</td><td>" + id + "</td></tr>\n");
-                resp.getWriter().println("    <tr><td>First Name</td><td>" + firstName + "</td></tr>\n");
-                resp.getWriter().println("    <tr><td>Last Name</td><td>" + lastName + "</td></tr>\n");
-                resp.getWriter().println("  </table>");
+                                         + "  <form action=\"member\" method=\"POST\">"
+                                         + "    <table border=\"1\">\n");
+                resp.getWriter().println("      <tr><td>ID</td><td>" + id + "</td></tr>\n");
+                resp.getWriter().println("      <tr><td>First Name</td><td><input type=\"text\" name=\"first_name\" value=\"" + firstName + "\" /></td></tr>\n");
+                resp.getWriter().println("      <tr><td>Last Name</td><td><input type=\"text\" name=\"last_name\" value=\"" + lastName + "\" /></td></tr>\n");
+                resp.getWriter().println("    </table>");
+                resp.getWriter().println("    <input type=\"submit\" value=\"Update\" />");
+                resp.getWriter().println("  </form>");
                 resp.getWriter().println("  <p><a href=\"member\">Member list</a></p>");
                 resp.getWriter().println("</body></html>");
             }
