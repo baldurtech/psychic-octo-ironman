@@ -70,7 +70,7 @@ public class MemberServlet extends HttpServlet {
                 out.println("      <tr><td>Last Name</td><td><input type=\"text\" name=\"last_name\" value=\"" + lastName + "\" /></td></tr>\n");
                 out.println("    </table>");
                 out.println("    <input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
-                out.println("    <input type=\"submit\" value=\"Update\" />");
+                out.println("    <input type=\"submit\" name=\"action\" value=\"Update\" />");
                 out.println("  </form>");
                 out.println("  <form action=\"member\" method=\"POST\">");
                 out.println("    <input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
@@ -164,7 +164,7 @@ public class MemberServlet extends HttpServlet {
                 stmt.execute(sql);
                 out.println("Delete ID=" + id + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
-            } else {
+            } else if("Update".equalsIgnoreCase(action)){
                 String sql = "update member set first_name='" + firstName + "', last_name='" + lastName + "' where id="+id;
                 System.out.println("SQL: " + sql);
                 stmt.execute(sql);
