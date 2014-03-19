@@ -148,11 +148,15 @@ public class MemberServlet extends HttpServlet {
             stmt = conn.createStatement();
 
             if(id == null) {
-                String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) "
-                    + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-                System.out.println("SQL: " + sql);
-                stmt.execute(sql);
-                out.println("Add " + firstName + " " + lastName + " success!");
+                if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
+                    String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) "
+                        + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+                    System.out.println("SQL: " + sql);
+                    stmt.execute(sql);
+                    out.println("Add " + firstName + " " + lastName + " success!");
+                } else {
+                    out.println("Error: first name or last name cannot be empty.");
+                }
                 out.println("<br/><a href=\"\">Member List</a>");
             } else if ("Delete".equalsIgnoreCase(action)) {
                 String sql = "DELETE FROM member where id=" + id;
