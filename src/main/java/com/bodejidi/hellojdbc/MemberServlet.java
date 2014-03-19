@@ -127,6 +127,7 @@ public class MemberServlet extends HttpServlet {
         String id = req.getParameter("id");
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
+        String action = req.getParameter("action");
 
         try {
             // The newInstance() call is a work around for some
@@ -152,6 +153,12 @@ public class MemberServlet extends HttpServlet {
                 System.out.println("SQL: " + sql);
                 stmt.execute(sql);
                 out.println("Add " + firstName + " " + lastName + " success!");
+                out.println("<br/><a href=\"\">Member List</a>");
+            } else if ("Delete".equalsIgnoreCase(action)) {
+                String sql = "DELETE FROM member where id=" + id;
+                System.out.println("SQL: " + sql);
+                stmt.execute(sql);
+                out.println("Delete ID=" + id + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
             } else {
                 String sql = "update member set first_name='" + firstName + "', last_name='" + lastName + "' where id="+id;
