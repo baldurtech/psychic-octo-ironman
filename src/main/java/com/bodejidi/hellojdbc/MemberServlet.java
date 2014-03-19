@@ -72,6 +72,10 @@ public class MemberServlet extends HttpServlet {
                 out.println("    <input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
                 out.println("    <input type=\"submit\" value=\"Update\" />");
                 out.println("  </form>");
+                out.println("  <form action=\"member\" method=\"POST\">");
+                out.println("    <input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
+                out.println("    <input type=\"submit\" name=\"action\" value=\"Delete\" />");
+                out.println("  </form>");
                 out.println("  <p><a href=\"member\">Member list</a></p>");
                 out.println("</body></html>");
             }
