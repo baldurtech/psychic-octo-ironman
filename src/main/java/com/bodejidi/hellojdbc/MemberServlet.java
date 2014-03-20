@@ -15,13 +15,14 @@ import java.sql.ResultSet;
 public class MemberServlet extends HttpServlet {
 
     static final String jdbcUrl = "jdbc:mysql://localhost/hellojdbc?user=root&password=";
+    static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName(jdbcDriver).newInstance();
         } catch (Exception ex) {
             // handle the error
         }
@@ -129,7 +130,7 @@ public class MemberServlet extends HttpServlet {
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName(jdbcDriver).newInstance();
         } catch (Exception ex) {
             // handle the error
         }
