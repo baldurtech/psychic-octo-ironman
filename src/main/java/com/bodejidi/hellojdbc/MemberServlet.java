@@ -3,6 +3,7 @@ package com.bodejidi.hellojdbc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.AutoCloseable;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ public class MemberServlet extends HttpServlet {
             String paramId = req.getParameter(MEMBER_FORM_ID);
             String sql = "SELECT * from " + MEMBER_TABLE;
             if(null == paramId) {
-                System.out.println("SQL: " + sql);
+                debug("SQL: " + sql);
                 rs = stmt.executeQuery(sql);
                 out.println("<html><head><title>Member List</title></head><body><h1>Member List</h1><table border=\"1\"><tr><td>ID</td><td>Name</td></tr>\n");
                 while(rs.next()) {
@@ -57,7 +58,7 @@ public class MemberServlet extends HttpServlet {
                 out.println("</body></html>");
             } else {
                 sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
-                System.out.println("SQL: " + sql);
+                debug("SQL: " + sql);
                 rs = stmt.executeQuery(sql);
 
                 rs.next();
@@ -82,9 +83,9 @@ public class MemberServlet extends HttpServlet {
             }
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
         } finally {
             close(rs);
@@ -118,7 +119,7 @@ public class MemberServlet extends HttpServlet {
                 if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
                     String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
                         + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-                    System.out.println("SQL: " + sql);
+                    debug("SQL: " + sql);
                     stmt.execute(sql);
                     out.println("Add " + firstName + " " + lastName + " success!");
                 } else {
@@ -127,22 +128,22 @@ public class MemberServlet extends HttpServlet {
                 out.println("<br/><a href=\"\">Member List</a>");
             } else if ("Delete".equalsIgnoreCase(action)) {
                 String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
-                System.out.println("SQL: " + sql);
+                debug("SQL: " + sql);
                 stmt.execute(sql);
                 out.println("Delete ID=" + id + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
             } else if("Update".equalsIgnoreCase(action)){
                 String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
-                System.out.println("SQL: " + sql);
+                debug("SQL: " + sql);
                 stmt.execute(sql);
                 out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
             }
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
         } finally {
             close(stmt);
@@ -173,5 +174,9 @@ public class MemberServlet extends HttpServlet {
                 // ignore
             }
         }
+    }
+
+    public void debug(String str) {
+        System.out.println("[DEBUG] " + (new Date()) + " " + str);
     }
 }
