@@ -19,6 +19,7 @@ public class MemberServlet extends HttpServlet {
 
     static final String contentType = "text/html; charset=UTF-8";
 
+    static final String MEMBER_TABLE = "member";
     static final String MEMBER_ID = "id";
     static final String MEMBER_FIRST_NAME = "first_name";
     static final String MEMBER_LAST_NAME = "last_name";
@@ -48,7 +49,7 @@ public class MemberServlet extends HttpServlet {
             resp.setContentType(contentType);
             stmt = conn.createStatement();
             String paramId = req.getParameter(MEMBER_FORM_ID);
-            String sql = "SELECT * from member";
+            String sql = "SELECT * from " + MEMBER_TABLE;
             if(null == paramId) {
                 System.out.println("SQL: " + sql);
                 rs = stmt.executeQuery(sql);
@@ -155,7 +156,7 @@ public class MemberServlet extends HttpServlet {
 
             if(id == null) {
                 if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
-                    String sql = "INSERT INTO member(first_name, last_name, date_created, last_updated) "
+                    String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
                         + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
                     System.out.println("SQL: " + sql);
                     stmt.execute(sql);
@@ -165,13 +166,13 @@ public class MemberServlet extends HttpServlet {
                 }
                 out.println("<br/><a href=\"\">Member List</a>");
             } else if ("Delete".equalsIgnoreCase(action)) {
-                String sql = "DELETE FROM member where id=" + id;
+                String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
                 System.out.println("SQL: " + sql);
                 stmt.execute(sql);
                 out.println("Delete ID=" + id + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
             } else if("Update".equalsIgnoreCase(action)){
-                String sql = "update member set first_name='" + firstName + "', last_name='" + lastName + "' where id="+id;
+                String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
                 System.out.println("SQL: " + sql);
                 stmt.execute(sql);
                 out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
