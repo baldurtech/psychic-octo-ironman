@@ -19,6 +19,7 @@ public class MemberServlet extends HttpServlet {
 
     static final String contentType = "text/html; charset=UTF-8";
 
+    static final String MEMBER_ID = "id";
     static final String MEMBER_FORM_ID = "id";
     static final String MEMBER_FORM_FIRST_NAME = "first_name";
     static final String MEMBER_FORM_LAST_NAME = "last_name";
@@ -51,7 +52,7 @@ public class MemberServlet extends HttpServlet {
                 rs = stmt.executeQuery(sql);
                 out.println("<html><head><title>Member List</title></head><body><h1>Member List</h1><table border=\"1\"><tr><td>ID</td><td>Name</td></tr>\n");
                 while(rs.next()) {
-                    Long id = rs.getLong("id");
+                    Long id = rs.getLong(MEMBER_ID);
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
                     out.println("<tr><td><a href=\"?id=" + id + "\">" + id + "</a></td><td>" + firstName + " " + lastName + "</td></tr>\n");
@@ -65,7 +66,7 @@ public class MemberServlet extends HttpServlet {
                 rs = stmt.executeQuery(sql);
 
                 rs.next();
-                Long id = rs.getLong("id");
+                Long id = rs.getLong(MEMBER_ID);
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
 
