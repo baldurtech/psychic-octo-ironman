@@ -31,6 +31,8 @@ public class MemberServlet extends HttpServlet {
     static final String FORM_SUBMIT_ACTION = "action";
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        resp.setContentType(contentType);
+
         PrintWriter out = resp.getWriter();
 
         Connection conn = null;
@@ -39,7 +41,6 @@ public class MemberServlet extends HttpServlet {
 
         try {
             conn = createConnection();
-            resp.setContentType(contentType);
             stmt = conn.createStatement();
             String paramId = req.getParameter(MEMBER_FORM_ID);
             String sql = "SELECT * from " + MEMBER_TABLE;
@@ -101,12 +102,13 @@ public class MemberServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType(contentType);
+        String action = req.getParameter(FORM_SUBMIT_ACTION);
+
         PrintWriter out = resp.getWriter();
 
         String id = req.getParameter(MEMBER_FORM_ID);
         String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
         String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
-        String action = req.getParameter(FORM_SUBMIT_ACTION);
 
         Connection conn = null;
         Statement stmt = null;
