@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 
 public class MemberServlet extends HttpServlet {
 
+    static final String jdbcUrl = "jdbc:mysql://localhost/hellojdbc?user=root&password=";
+
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
         try {
@@ -30,9 +32,7 @@ public class MemberServlet extends HttpServlet {
 
         try {
             conn =
-                DriverManager.getConnection("jdbc:mysql://localhost/hellojdbc?"
-                                            + "user=root"
-                                            + "&password=");
+                DriverManager.getConnection(jdbcUrl);
 
             resp.setContentType("text/html; charset=UTF-8");
             stmt = conn.createStatement();
@@ -139,9 +139,7 @@ public class MemberServlet extends HttpServlet {
 
         try {
             conn =
-                DriverManager.getConnection("jdbc:mysql://localhost/hellojdbc?"
-                                            + "user=root"
-                                            + "&password=");
+                DriverManager.getConnection(jdbcUrl);
             stmt = conn.createStatement();
 
             if(id == null) {
