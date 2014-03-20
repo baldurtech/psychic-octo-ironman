@@ -2,6 +2,7 @@ package com.bodejidi.hellojdbc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.AutoCloseable;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -86,37 +87,14 @@ public class MemberServlet extends HttpServlet {
             System.out.println("VendorError: " + ex.getErrorCode());
             out.println("Error!");
         } finally {
-            // it is a good idea to release
-            // resources in a finally{} block
-            // in reverse-order of their creation
-            // if they are no-longer needed
+            close(rs);
+            rs = null;
 
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException sqlEx) {
-                    // ignore
-                }
-                rs = null;
-            }
+            close(stmt);
+            stmt = null;
 
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException sqlEx) {
-                    // ignore
-                }
-                stmt = null;
-            }
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException sqlEx) {
-                    // ignore
-                }
-                conn = null;
-            }
+            close(conn);
+            conn = null;
         }
     }
 
@@ -167,28 +145,11 @@ public class MemberServlet extends HttpServlet {
             System.out.println("VendorError: " + ex.getErrorCode());
             out.println("Error!");
         } finally {
-            // it is a good idea to release
-            // resources in a finally{} block
-            // in reverse-order of their creation
-            // if they are no-longer needed
+            close(stmt);
+            stmt = null;
 
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException sqlEx) {
-                    // ignore
-                }
-                stmt = null;
-            }
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException sqlEx) {
-                    // ignore
-                }
-                conn = null;
-            }
+            close(conn);
+            conn = null;
         }
     }
 
@@ -202,5 +163,15 @@ public class MemberServlet extends HttpServlet {
         }
 
         return DriverManager.getConnection(jdbcUrl);
+    }
+
+    protected void close(AutoCloseable obj) {
+        if (obj != null) {
+            try {
+                obj.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
     }
 }
