@@ -47,29 +47,7 @@ public class MemberServlet extends HttpServlet {
             if(null == paramId) {
                 list(req, resp);
             } else {
-                sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
-                debug("SQL: " + sql);
-                rs = stmt.executeQuery(sql);
-
-                rs.next();
-                Long id = rs.getLong(MEMBER_ID);
-                String firstName = rs.getString(MEMBER_FIRST_NAME);
-                String lastName = rs.getString(MEMBER_LAST_NAME);
-
-                out.println("<html><head><title>Member</title></head><body>"
-                                         + "  <h1>Member</h1>"
-                                         + "  <form action=\"member\" method=\"POST\">"
-                                         + "    <table border=\"1\">\n");
-                out.println("      <tr><td>ID</td><td>" + id + "</td></tr>\n");
-                out.println("      <tr><td>First Name</td><td><input type=\"text\" name=\"first_name\" value=\"" + firstName + "\" /></td></tr>\n");
-                out.println("      <tr><td>Last Name</td><td><input type=\"text\" name=\"last_name\" value=\"" + lastName + "\" /></td></tr>\n");
-                out.println("    </table>");
-                out.println("    <input type=\"hidden\" name=\"id\" value=\"" + id + "\" />");
-                out.println("    <input type=\"submit\" name=\"action\" value=\"Update\" />");
-                out.println("    <input type=\"submit\" name=\"action\" value=\"Delete\" />");
-                out.println("  </form>");
-                out.println("  <p><a href=\"member\">Member list</a></p>");
-                out.println("</body></html>");
+                show(req, resp);
             }
         } catch (SQLException ex) {
             // handle any errors
@@ -200,6 +178,76 @@ public class MemberServlet extends HttpServlet {
             }
             out.println("</table>");
             out.println("<p><a href=\".\">Add member</a></p>");
+            out.println("</body></html>");
+        } catch (SQLException ex) {
+            // handle any errors
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
+            out.println("Error!");
+        } finally {
+            close(rs);
+            rs = null;
+
+            close(stmt);
+            stmt = null;
+
+            close(conn);
+            conn = null;
+        }
+    }
+
+    public void show(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = createConnection();
+            stmt = conn.createStatement();
+            String paramId = req.getParameter(MEMBER_FORM_ID);
+            String sql = "SELECT * from " + MEMBER_TABLE;
+            sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
+            debug("SQL: " + sql);
+            rs = stmt.executeQuery(sql);
+
+            rs.next();
+            Long id = rs.getLong(MEMBER_ID);
+            String firstName = rs.getString(MEMBER_FIRST_NAME);
+            String lastName = rs.getString(MEMBER_LAST_NAME);
+
+            out.println("<html><head><title>Member</title></head><body>"
+                        + "  <h1>Member</h1>"
+                        + "  <form action=\"member\" method=\"POST\">"
+                        + "    <table border=\"1\">\n");
+
+            out.println("      <tr><td>ID</td><td>" + id + "</td></tr>");
+
+            out.println("      <tr><td>First Name</td><td>\n"
+                        + "<input type=\"text\" name=\"first_name\""
+                        + " value=\"" + firstName + "\" /></td></tr>");
+
+            out.println("      <tr><td>Last Name</td><td>\n"
+                        + "<input type=\"text\" name=\"last_name\""
+                        + " value=\"" + lastName + "\" /></td></tr>");
+
+            out.println("    </table>");
+
+            out.println("    <input type=\"hidden\" name=\"id\""
+                        + " value=\"" + id + "\" />");
+
+            out.println("    <input type=\"submit\" name=\"action\""
+                        + " value=\"Update\" />");
+
+            out.println("    <input type=\"submit\" name=\"action\""
+                        + " value=\"Delete\" />");
+
+            out.println("  </form>");
+            out.println("  <p><a href=\"member\">Member list</a></p>");
             out.println("</body></html>");
         } catch (SQLException ex) {
             // handle any errors
