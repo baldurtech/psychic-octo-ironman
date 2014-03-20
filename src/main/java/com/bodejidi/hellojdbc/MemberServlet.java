@@ -19,6 +19,8 @@ public class MemberServlet extends HttpServlet {
 
     static final String contentType = "text/html; charset=UTF-8";
 
+    static final String MEMBER_FORM_ID = "id";
+
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
         try {
@@ -39,7 +41,7 @@ public class MemberServlet extends HttpServlet {
 
             resp.setContentType(contentType);
             stmt = conn.createStatement();
-            String paramId = req.getParameter("id");
+            String paramId = req.getParameter(MEMBER_FORM_ID);
             String sql = "SELECT * from member";
             if(null == paramId) {
                 System.out.println("SQL: " + sql);
@@ -124,7 +126,7 @@ public class MemberServlet extends HttpServlet {
         resp.setContentType(contentType);
         PrintWriter out = resp.getWriter();
 
-        String id = req.getParameter("id");
+        String id = req.getParameter(MEMBER_FORM_ID);
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
         String action = req.getParameter("action");
