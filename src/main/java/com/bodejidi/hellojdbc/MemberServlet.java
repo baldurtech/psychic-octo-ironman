@@ -17,6 +17,8 @@ public class MemberServlet extends HttpServlet {
     static final String jdbcUrl = "jdbc:mysql://localhost/hellojdbc?user=root&password=";
     static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
+    static final String contentType = "text/html; charset=UTF-8";
+
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
         try {
@@ -35,7 +37,7 @@ public class MemberServlet extends HttpServlet {
             conn =
                 DriverManager.getConnection(jdbcUrl);
 
-            resp.setContentType("text/html; charset=UTF-8");
+            resp.setContentType(contentType);
             stmt = conn.createStatement();
             String paramId = req.getParameter("id");
             String sql = "SELECT * from member";
@@ -119,7 +121,7 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        resp.setContentType("text/html; charset=UTF-8");
+        resp.setContentType(contentType);
         PrintWriter out = resp.getWriter();
 
         String id = req.getParameter("id");
