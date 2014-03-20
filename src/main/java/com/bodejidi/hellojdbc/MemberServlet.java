@@ -22,6 +22,7 @@ public class MemberServlet extends HttpServlet {
     static final String MEMBER_FORM_ID = "id";
     static final String MEMBER_FORM_FIRST_NAME = "first_name";
     static final String MEMBER_FORM_LAST_NAME = "last_name";
+    static final String FORM_SUBMIT_ACTION = "action";
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
@@ -131,7 +132,7 @@ public class MemberServlet extends HttpServlet {
         String id = req.getParameter(MEMBER_FORM_ID);
         String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
         String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
-        String action = req.getParameter("action");
+        String action = req.getParameter(FORM_SUBMIT_ACTION);
 
         try {
             // The newInstance() call is a work around for some
