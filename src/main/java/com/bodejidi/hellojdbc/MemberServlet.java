@@ -20,6 +20,8 @@ public class MemberServlet extends HttpServlet {
     static final String contentType = "text/html; charset=UTF-8";
 
     static final String MEMBER_FORM_ID = "id";
+    static final String MEMBER_FORM_FIRST_NAME = "first_name";
+    static final String MEMBER_FORM_LAST_NAME = "last_name";
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
@@ -127,8 +129,8 @@ public class MemberServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         String id = req.getParameter(MEMBER_FORM_ID);
-        String firstName = req.getParameter("first_name");
-        String lastName = req.getParameter("last_name");
+        String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
+        String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
         String action = req.getParameter("action");
 
         try {
