@@ -30,22 +30,13 @@ public class MemberServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName(jdbcDriver).newInstance();
-        } catch (Exception ex) {
-            // handle the error
-        }
 
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
 
         try {
-            conn =
-                DriverManager.getConnection(jdbcUrl);
-
+            conn = createConnection();
             resp.setContentType(contentType);
             stmt = conn.createStatement();
             String paramId = req.getParameter(MEMBER_FORM_ID);
@@ -138,20 +129,11 @@ public class MemberServlet extends HttpServlet {
         String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
         String action = req.getParameter(FORM_SUBMIT_ACTION);
 
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName(jdbcDriver).newInstance();
-        } catch (Exception ex) {
-            // handle the error
-        }
-
         Connection conn = null;
         Statement stmt = null;
 
         try {
-            conn =
-                DriverManager.getConnection(jdbcUrl);
+            conn = createConnection();
             stmt = conn.createStatement();
 
             if(id == null) {
@@ -208,5 +190,17 @@ public class MemberServlet extends HttpServlet {
                 conn = null;
             }
         }
+    }
+
+    protected Connection createConnection() throws SQLException {
+        try {
+            // The newInstance() call is a work around for some
+            // broken Java implementations
+            Class.forName(jdbcDriver).newInstance();
+        } catch (Exception ex) {
+            // handle the error
+        }
+
+        return DriverManager.getConnection(jdbcUrl);
     }
 }
