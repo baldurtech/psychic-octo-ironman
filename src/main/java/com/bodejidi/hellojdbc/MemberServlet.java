@@ -35,35 +35,11 @@ public class MemberServlet extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
 
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            conn = createConnection();
-            stmt = conn.createStatement();
-            String paramId = req.getParameter(MEMBER_FORM_ID);
-            String sql = "SELECT * from " + MEMBER_TABLE;
-            if(null == paramId) {
-                list(req, resp);
-            } else {
-                show(req, resp);
-            }
-        } catch (SQLException ex) {
-            // handle any errors
-            debug("SQLException: " + ex.getMessage());
-            debug("SQLState: " + ex.getSQLState());
-            debug("VendorError: " + ex.getErrorCode());
-            out.println("Error!");
-        } finally {
-            close(rs);
-            rs = null;
-
-            close(stmt);
-            stmt = null;
-
-            close(conn);
-            conn = null;
+        String paramId = req.getParameter(MEMBER_FORM_ID);
+        if(null == paramId) {
+            list(req, resp);
+        } else {
+            show(req, resp);
         }
     }
 
