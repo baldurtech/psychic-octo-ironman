@@ -64,7 +64,7 @@ public class MemberServlet extends HttpServlet {
                 out.println("<p><a href=\".\">Add member</a></p>");
                 out.println("</body></html>");
             } else {
-                sql = sql + " WHERE id=" + paramId;
+                sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
                 System.out.println("SQL: " + sql);
                 rs = stmt.executeQuery(sql);
 
