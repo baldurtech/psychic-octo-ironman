@@ -45,18 +45,7 @@ public class MemberServlet extends HttpServlet {
             String paramId = req.getParameter(MEMBER_FORM_ID);
             String sql = "SELECT * from " + MEMBER_TABLE;
             if(null == paramId) {
-                debug("SQL: " + sql);
-                rs = stmt.executeQuery(sql);
-                out.println("<html><head><title>Member List</title></head><body><h1>Member List</h1><table border=\"1\"><tr><td>ID</td><td>Name</td></tr>\n");
-                while(rs.next()) {
-                    Long id = rs.getLong(MEMBER_ID);
-                    String firstName = rs.getString(MEMBER_FIRST_NAME);
-                    String lastName = rs.getString(MEMBER_LAST_NAME);
-                    out.println("<tr><td><a href=\"?id=" + id + "\">" + id + "</a></td><td>" + firstName + " " + lastName + "</td></tr>\n");
-                }
-                out.println("</table>");
-                out.println("<p><a href=\".\">Add member</a></p>");
-                out.println("</body></html>");
+                list(req, resp);
             } else {
                 sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
                 debug("SQL: " + sql);
@@ -181,4 +170,53 @@ public class MemberServlet extends HttpServlet {
     public void debug(String str) {
         System.out.println("[DEBUG] " + (new Date()) + " " + str);
     }
+
+    public void list(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = createConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT * from " + MEMBER_TABLE;
+            debug("SQL: " + sql);
+            rs = stmt.executeQuery(sql);
+            out.println("<html><head><title>Member List</title></head>\n"
+                        + "<body><h1>Member List</h1>\n"
+                        + "<table border=\"1\"><tr><td>ID</td>"
+                        + "<td>Name</td></tr>\n");
+            while(rs.next()) {
+                Long id = rs.getLong(MEMBER_ID);
+                String firstName = rs.getString(MEMBER_FIRST_NAME);
+                String lastName = rs.getString(MEMBER_LAST_NAME);
+                out.println("<tr><td><a href=\"?id=" + id + "\">" + id
+                            + "</a></td><td>" + firstName + " " + lastName
+                            + "</td></tr>\n");
+            }
+            out.println("</table>");
+            out.println("<p><a href=\".\">Add member</a></p>");
+            out.println("</body></html>");
+        } catch (SQLException ex) {
+            // handle any errors
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
+            out.println("Error!");
+        } finally {
+            close(rs);
+            rs = null;
+
+            close(stmt);
+            stmt = null;
+
+            close(conn);
+            conn = null;
+        }
+    }
+
 }
