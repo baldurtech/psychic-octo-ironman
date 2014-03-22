@@ -143,7 +143,7 @@ public class MemberServlet extends HttpServlet {
         out.println("  </head>");
         out.println("  <body>");
         out.println("    <h1>Please Login!</h1>");
-        out.println("    <form action=\"member\">");
+        out.println("    <form action=\"member\" method=\"POST\">");
         out.println("      <label>Username: <input type=\"text\" name=\"username\"/></label>");
         out.println("      <label>Password: <input type=\"password\" name=\"password\"/></label>");
         out.println("      <input type=\"submit\" name=\"action\" value=\"Login\" />");
