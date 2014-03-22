@@ -177,25 +177,9 @@ public class MemberServlet extends HttpServlet {
         throws IOException, ServletException {
 
         PrintWriter out = resp.getWriter();
-
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-
         try {
-            conn = createConnection();
-            stmt = conn.createStatement();
             String paramId = req.getParameter(MEMBER_FORM_ID);
-            String sql = "SELECT * from " + MEMBER_TABLE;
-            sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
-            debug("SQL: " + sql);
-            rs = stmt.executeQuery(sql);
-
-            Member member = new Member();
-            rs.next();
-            member.setId(rs.getLong(MEMBER_ID));
-            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-            member.setLastName(rs.getString(MEMBER_LAST_NAME));
+            Member member = getMemberById(paramId);
 
             out.println("<html><head><title>Member</title></head><body>"
                         + "  <h1>Member</h1>"
@@ -232,6 +216,30 @@ public class MemberServlet extends HttpServlet {
             debug("SQLState: " + ex.getSQLState());
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
+        }
+    }
+
+    public Member getMemberById(String paramId)
+        throws SQLException {
+
+        Member member = new Member();
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = createConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT * from " + MEMBER_TABLE;
+            sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
+            debug("SQL: " + sql);
+            rs = stmt.executeQuery(sql);
+
+            rs.next();
+            member.setId(rs.getLong(MEMBER_ID));
+            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+            member.setLastName(rs.getString(MEMBER_LAST_NAME));
         } finally {
             close(rs);
             rs = null;
@@ -242,6 +250,7 @@ public class MemberServlet extends HttpServlet {
             close(conn);
             conn = null;
         }
-    }
 
+        return member;
+    }
 }
