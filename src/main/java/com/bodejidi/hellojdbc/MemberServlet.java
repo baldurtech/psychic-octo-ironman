@@ -124,6 +124,26 @@ public class MemberServlet extends HttpServlet {
         System.out.println("[DEBUG] " + (new Date()) + " " + str);
     }
 
+    public void login(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        out.println("<html>");
+        out.println("  <head>");
+        out.println("    <title>Login</title>");
+        out.println("  </head>");
+        out.println("  <body>");
+        out.println("    <h1>Please Login!</h1>");
+        out.println("    <form action=\"member\">");
+        out.println("      <label>Username: <input type=\"text\" name=\"username\"/></label>");
+        out.println("      <label>Password: <input type=\"password\" name=\"password\"/></label>");
+        out.println("      <input type=\"submit\" name=\"action\" value=\"Login\" />");
+        out.println("    </form>");
+        out.println("  </body>");
+        out.println("</html>");
+    }
+
     public void list(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
