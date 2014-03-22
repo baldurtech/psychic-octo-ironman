@@ -183,6 +183,10 @@ public class MemberServlet extends HttpServlet {
         out.println("</html>");
     }
 
+    public String showLoginInfo() {
+        return "Welcome, admin";
+    }
+
     public void list(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
@@ -190,7 +194,9 @@ public class MemberServlet extends HttpServlet {
 
         try {
             out.println("<html><head><title>Member List</title></head>\n"
-                        + "<body><h1>Member List</h1>\n"
+                        + "<body>\n"
+                        + showLoginInfo()
+                        + "<h1>Member List</h1>\n"
                         + "<table border=\"1\"><tr><td>ID</td>"
                         + "<td>Name</td></tr>\n");
 
@@ -222,6 +228,7 @@ public class MemberServlet extends HttpServlet {
             Member member = getMemberById(paramId);
 
             out.println("<html><head><title>Member</title></head><body>"
+                        + showLoginInfo()
                         + "  <h1>Member</h1>"
                         + "  <form action=\"member\" method=\"POST\">"
                         + "    <table border=\"1\">\n");
