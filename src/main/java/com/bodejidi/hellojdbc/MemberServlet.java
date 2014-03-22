@@ -191,30 +191,31 @@ public class MemberServlet extends HttpServlet {
             debug("SQL: " + sql);
             rs = stmt.executeQuery(sql);
 
+            Member member = new Member();
             rs.next();
-            Long id = rs.getLong(MEMBER_ID);
-            String firstName = rs.getString(MEMBER_FIRST_NAME);
-            String lastName = rs.getString(MEMBER_LAST_NAME);
+            member.setId(rs.getLong(MEMBER_ID));
+            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+            member.setLastName(rs.getString(MEMBER_LAST_NAME));
 
             out.println("<html><head><title>Member</title></head><body>"
                         + "  <h1>Member</h1>"
                         + "  <form action=\"member\" method=\"POST\">"
                         + "    <table border=\"1\">\n");
 
-            out.println("      <tr><td>ID</td><td>" + id + "</td></tr>");
+            out.println("      <tr><td>ID</td><td>" + member.getId() + "</td></tr>");
 
             out.println("      <tr><td>First Name</td><td>\n"
                         + "<input type=\"text\" name=\"first_name\""
-                        + " value=\"" + firstName + "\" /></td></tr>");
+                        + " value=\"" + member.getFirstName() + "\" /></td></tr>");
 
             out.println("      <tr><td>Last Name</td><td>\n"
                         + "<input type=\"text\" name=\"last_name\""
-                        + " value=\"" + lastName + "\" /></td></tr>");
+                        + " value=\"" + member.getLastName() + "\" /></td></tr>");
 
             out.println("    </table>");
 
             out.println("    <input type=\"hidden\" name=\"id\""
-                        + " value=\"" + id + "\" />");
+                        + " value=\"" + member.getId() + "\" />");
 
             out.println("    <input type=\"submit\" name=\"action\""
                         + " value=\"Update\" />");
