@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.AutoCloseable;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -135,6 +137,8 @@ public class MemberServlet extends HttpServlet {
         ResultSet rs = null;
 
         try {
+            List<Member> memberList = new ArrayList<Member>();
+
             conn = createConnection();
             stmt = conn.createStatement();
             String sql = "SELECT * from " + MEMBER_TABLE;
@@ -145,11 +149,18 @@ public class MemberServlet extends HttpServlet {
                         + "<table border=\"1\"><tr><td>ID</td>"
                         + "<td>Name</td></tr>\n");
             while(rs.next()) {
-                Long id = rs.getLong(MEMBER_ID);
-                String firstName = rs.getString(MEMBER_FIRST_NAME);
-                String lastName = rs.getString(MEMBER_LAST_NAME);
-                out.println("<tr><td><a href=\"?id=" + id + "\">" + id
-                            + "</a></td><td>" + firstName + " " + lastName
+                Member member = new Member();
+                member.setId(rs.getLong(MEMBER_ID));
+                member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+                member.setLastName(rs.getString(MEMBER_LAST_NAME));
+                memberList.add(member);
+            }
+
+            for(Member member: memberList) {
+                out.println("<tr><td><a href=\"?id=" + member.getId() + "\">"
+                            + member.getId()
+                            + "</a></td><td>" + member.getFirstName()
+                            + " " + member.getLastName()
                             + "</td></tr>\n");
             }
             out.println("</table>");
