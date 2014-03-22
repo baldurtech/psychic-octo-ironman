@@ -67,6 +67,37 @@ public class MemberServlet extends HttpServlet {
             conn = createConnection();
             stmt = conn.createStatement();
 
+            if ("Login".equalsIgnoreCase(action)) {
+                String username = req.getParameter("username");
+                String password = req.getParameter("password");
+
+                if(username.equalsIgnoreCase("admin") &&
+                   password.equals("s3cr3t")) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("memberId", 0L);
+
+                    out.println("<html>");
+                    out.println("  <head>");
+                    out.println("    <title>Login Success</title>");
+                    out.println("  </head>");
+                    out.println("  <body>");
+                    out.println("    <h1>Welcome Admin!</h1>");
+                    out.println("    <a href=\"member\">Member list</a>");
+                    out.println("  </body>");
+                    out.println("</html>");
+                } else {
+                    out.println("<html>");
+                    out.println("  <head>");
+                    out.println("    <title>Login Fail!</title>");
+                    out.println("  </head>");
+                    out.println("  <body>");
+                    out.println("    <h1>Login Fail!</h1>");
+                    out.println("  </body>");
+                    out.println("</html>");
+                }
+                return;
+            }
+
             if(id == null) {
                 if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
                     String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
