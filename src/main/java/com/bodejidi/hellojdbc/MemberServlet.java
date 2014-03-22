@@ -190,7 +190,7 @@ public class MemberServlet extends HttpServlet {
     }
 
     public String showLoginInfo() {
-        return "Welcome, admin";
+        return "Welcome, admin. <a href=\"member?action=Logout\">logout</a>";
     }
 
     public void list(HttpServletRequest req, HttpServletResponse resp)
