@@ -37,6 +37,12 @@ public class MemberServlet extends HttpServlet {
         resp.setContentType(contentType);
 
         HttpSession session = req.getSession();
+
+        String action = req.getParameter("action");
+        if("Logout".equalsIgnoreCase(action)) {
+            session.removeAttribute("memberId");
+        }
+
         Long memberId = (Long)session.getAttribute("memberId");
         if(memberId == null) {
             login(req, resp);
