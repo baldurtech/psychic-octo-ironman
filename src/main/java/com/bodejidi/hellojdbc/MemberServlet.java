@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -34,6 +35,13 @@ public class MemberServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType(contentType);
+
+        HttpSession session = req.getSession();
+        Long memberId = (Long)session.getAttribute("memberId");
+        if(memberId == null) {
+            login(req, resp);
+            return;
+        }
 
         if(req.getParameter(MEMBER_FORM_ID) == null) {
             list(req, resp);
