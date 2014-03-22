@@ -35,10 +35,7 @@ public class MemberServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType(contentType);
 
-        PrintWriter out = resp.getWriter();
-
-        String paramId = req.getParameter(MEMBER_FORM_ID);
-        if(null == paramId) {
+        if(req.getParameter(MEMBER_FORM_ID) == paramId) {
             list(req, resp);
         } else {
             show(req, resp);
