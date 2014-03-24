@@ -53,7 +53,7 @@ public class MemberServlet extends HttpServlet {
 
         if("List".equalsIgnoreCase(action)) {
             list(req, resp);
-        } else {
+        } else if("Show".equalsIgnoreCase(action)) {
             show(req, resp);
         }
     }
@@ -151,7 +151,7 @@ public class MemberServlet extends HttpServlet {
                         + "<td>Name</td></tr>\n");
 
             for(Member member: findAllMember()) {
-                out.println("<tr><td><a href=\"?id=" + member.getId() + "\">"
+                out.println("<tr><td><a href=\"?action=Show&id=" + member.getId() + "\">"
                             + member.getId()
                             + "</a></td><td>" + member.getFirstName()
                             + " " + member.getLastName()
