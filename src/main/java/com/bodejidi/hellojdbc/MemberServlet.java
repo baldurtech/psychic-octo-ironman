@@ -32,6 +32,10 @@ public class MemberServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         String action = req.getParameter("action");
+        if(null == action) {
+            action = "List";
+        }
+
         if("Logout".equalsIgnoreCase(action)) {
             session.removeAttribute("memberId");
         }
@@ -47,7 +51,7 @@ public class MemberServlet extends HttpServlet {
             return;
         }
 
-        if(req.getParameter(MEMBER_FORM_ID) == null) {
+        if("List".equalsIgnoreCase(action)) {
             list(req, resp);
         } else {
             show(req, resp);
