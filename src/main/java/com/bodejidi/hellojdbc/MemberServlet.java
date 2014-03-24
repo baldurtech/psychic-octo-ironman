@@ -42,6 +42,11 @@ public class MemberServlet extends HttpServlet {
             return;
         }
 
+        if("Create".equalsIgnoreCase(action)) {
+            create(req, resp);
+            return;
+        }
+
         if(req.getParameter(MEMBER_FORM_ID) == null) {
             list(req, resp);
         } else {
@@ -149,7 +154,7 @@ public class MemberServlet extends HttpServlet {
                             + "</td></tr>\n");
             }
             out.println("</table>");
-            out.println("<p><a href=\".\">Add member</a></p>");
+            out.println("<p><a href=\"?action=Create\">Add member</a></p>");
             out.println("</body></html>");
         } catch (SQLException ex) {
             // handle any errors

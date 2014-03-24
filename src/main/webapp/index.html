@@ -4,11 +4,9 @@
   </head>
   <body>
     <h1>会员管理</h1>
-    <form action="member" method="POST">
-      <label>First Name: <input type="text" name="first_name"/></label>
-      <label>Last Name: <input type="text" name="last_name"/></label>
-      <input type="submit" value="新增"/>
-    </form>
-    <p><a href="member">Member List</a></p>
+    <ul>
+      <li><a href="member?action=Create">创建会员</a></li>
+      <li><a href="member?action=List">查看所有会员</a></li>
+    </ul>
   </body>
 </html>
