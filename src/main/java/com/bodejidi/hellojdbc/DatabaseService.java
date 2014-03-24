@@ -15,16 +15,30 @@ public class DatabaseService {
     private Statement stmt = null;
     private ResultSet rs = null;
 
-    public DatabaseService() {
+    private DatabaseService() {
+    }
 
+    static public DatabaseService newInstance()
+        throws SQLException {
+
+        DatabaseService databaseService = new DatabaseService();
+
+        databaseService.conn = databaseService.createConnection();
+        databaseService.stmt = databaseService.conn.createStatement();
+
+        return databaseService;
     }
 
     public ResultSet executeQuery(String sql)
         throws SQLException {
 
-        conn = createConnection();
-        stmt = conn.createStatement();
         return stmt.executeQuery(sql);
+    }
+
+    public void execute(String sql)
+        throws SQLException {
+
+        stmt.execute(sql);
     }
 
     public void close() {

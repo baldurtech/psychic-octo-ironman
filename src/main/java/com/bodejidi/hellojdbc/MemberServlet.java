@@ -294,7 +294,8 @@ public class MemberServlet extends HttpServlet {
         sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
         debug("SQL: " + sql);
 
-        DatabaseService databaseService = new DatabaseService();
+        DatabaseService databaseService = DatabaseService.newInstance();
+
         ResultSet rs = databaseService.executeQuery(sql);
 
         rs.next();
@@ -310,7 +311,8 @@ public class MemberServlet extends HttpServlet {
     public List<Member> findAllMember() throws SQLException {
         List<Member> memberList = new ArrayList<Member>();
 
-        DatabaseService databaseService = new DatabaseService();
+        DatabaseService databaseService = DatabaseService.newInstance();
+
         String sql = "SELECT * from " + MEMBER_TABLE;
         debug("SQL: " + sql);
 
