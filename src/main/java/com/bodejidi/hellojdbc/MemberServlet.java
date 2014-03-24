@@ -73,13 +73,7 @@ public class MemberServlet extends HttpServlet {
         String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
         String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
 
-        Connection conn = null;
-        Statement stmt = null;
-
         try {
-            conn = createConnection();
-            stmt = conn.createStatement();
-
             if ("Login".equalsIgnoreCase(action)) {
                 String username = req.getParameter("username");
                 String password = req.getParameter("password");
@@ -151,12 +145,6 @@ public class MemberServlet extends HttpServlet {
             debug("SQLState: " + ex.getSQLState());
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
-        } finally {
-            close(stmt);
-            stmt = null;
-
-            close(conn);
-            conn = null;
         }
     }
 
