@@ -127,7 +127,11 @@ public class MemberServlet extends HttpServlet {
             } else if ("Delete".equalsIgnoreCase(action)) {
                 String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
                 debug("SQL: " + sql);
-                stmt.execute(sql);
+
+                DatabaseService ds = DatabaseService.newInstance();
+                ds.execute(sql);
+                ds.close();
+
                 out.println("Delete ID=" + id + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
             } else if("Update".equalsIgnoreCase(action)){
