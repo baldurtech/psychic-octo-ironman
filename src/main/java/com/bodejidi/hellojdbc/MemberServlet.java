@@ -79,14 +79,7 @@ public class MemberServlet extends HttpServlet {
                     out.println("  </body>");
                     out.println("</html>");
                 } else {
-                    out.println("<html>");
-                    out.println("  <head>");
-                    out.println("    <title>Login Fail!</title>");
-                    out.println("  </head>");
-                    out.println("  <body>");
-                    out.println("    <h1>Login Fail!</h1>");
-                    out.println("  </body>");
-                    out.println("</html>");
+                    showLoginFail(req, resp);
                 }
                 return;
             }
@@ -239,6 +232,22 @@ public class MemberServlet extends HttpServlet {
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
         }
+    }
+
+    public void showLoginFail(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        out.println("<html>");
+        out.println("  <head>");
+        out.println("    <title>Login Fail!</title>");
+        out.println("  </head>");
+        out.println("  <body>");
+        out.println("    <h1>Login Fail!</h1>");
+        out.println("  </body>");
+        out.println("</html>");
+
     }
 
     public Member getMemberById(String paramId)
