@@ -69,15 +69,7 @@ public class MemberServlet extends HttpServlet {
                     HttpSession session = req.getSession();
                     session.setAttribute("memberId", 0L);
 
-                    out.println("<html>");
-                    out.println("  <head>");
-                    out.println("    <title>Login Success</title>");
-                    out.println("  </head>");
-                    out.println("  <body>");
-                    out.println("    <h1>Welcome Admin!</h1>");
-                    out.println("    <a href=\"member\">Member list</a>");
-                    out.println("  </body>");
-                    out.println("</html>");
+                    showLoginSuccess(req, resp);
                 } else {
                     showLoginFail(req, resp);
                 }
@@ -248,6 +240,21 @@ public class MemberServlet extends HttpServlet {
         out.println("  </body>");
         out.println("</html>");
 
+    }
+
+    public void showLoginSuccess(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+        out.println("<html>");
+        out.println("  <head>");
+        out.println("    <title>Login Success</title>");
+        out.println("  </head>");
+        out.println("  <body>");
+        out.println("    <h1>Welcome Admin!</h1>");
+        out.println("    <a href=\"member\">Member list</a>");
+        out.println("  </body>");
+        out.println("</html>");
     }
 
     public Member getMemberById(String paramId)
