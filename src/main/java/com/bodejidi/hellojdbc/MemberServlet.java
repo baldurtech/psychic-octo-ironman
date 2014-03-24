@@ -77,18 +77,7 @@ public class MemberServlet extends HttpServlet {
             }
 
             if(id == null) {
-                if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
-                    String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
-                        + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-                    debug("SQL: " + sql);
-                    DatabaseService ds = DatabaseService.newInstance();
-                    ds.execute(sql);
-                    ds.close();
-                    out.println("Add " + firstName + " " + lastName + " success!");
-                } else {
-                    out.println("Error: first name or last name cannot be empty.");
-                }
-                out.println("<br/><a href=\"\">Member List</a>");
+                create(req, resp);
             } else if ("Delete".equalsIgnoreCase(action)) {
                 String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
                 debug("SQL: " + sql);
@@ -255,6 +244,36 @@ public class MemberServlet extends HttpServlet {
         out.println("    <a href=\"member\">Member list</a>");
         out.println("  </body>");
         out.println("</html>");
+    }
+
+    public void create(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        try{
+            String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
+            String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
+
+            if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
+                String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
+                    + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+                debug("SQL: " + sql);
+                DatabaseService ds = DatabaseService.newInstance();
+                ds.execute(sql);
+                ds.close();
+                out.println("Add " + firstName + " " + lastName + " success!");
+            } else {
+                out.println("Error: first name or last name cannot be empty.");
+            }
+            out.println("<br/><a href=\"\">Member List</a>");
+        } catch (SQLException ex) {
+            // handle any errors
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
+            out.println("Error: Cannot create member!");
+        }
     }
 
     public Member getMemberById(String paramId)
