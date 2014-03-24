@@ -72,7 +72,7 @@ public class MemberServlet extends HttpServlet {
         }
 
         if(id == null) {
-            create(req, resp);
+            save(req, resp);
         } else if ("Delete".equalsIgnoreCase(action)) {
             delete(req ,resp);
         } else if("Update".equalsIgnoreCase(action)){
@@ -218,7 +218,7 @@ public class MemberServlet extends HttpServlet {
         out.println("</html>");
     }
 
-    public void create(HttpServletRequest req, HttpServletResponse resp)
+    public void save(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
         PrintWriter out = resp.getWriter();
