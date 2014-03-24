@@ -137,7 +137,11 @@ public class MemberServlet extends HttpServlet {
             } else if("Update".equalsIgnoreCase(action)){
                 String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
                 debug("SQL: " + sql);
-                stmt.execute(sql);
+
+                DatabaseService ds = DatabaseService.newInstance();
+                ds.execute(sql);
+                ds.close();
+
                 out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
                 out.println("<br/><a href=\"\">Member List</a>");
             }
