@@ -19,7 +19,14 @@ import java.sql.ResultSet;
 
 public class MemberServlet extends HttpServlet {
 
+    /**
+     * @Deprecated
+     */
     static final String jdbcUrl = "jdbc:mysql://localhost/hellojdbc?user=root&password=";
+
+    /**
+     * @Deprecated
+     */
     static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
     static final String contentType = "text/html; charset=UTF-8";
@@ -143,6 +150,9 @@ public class MemberServlet extends HttpServlet {
         }
     }
 
+    /**
+     * @Deprecated
+     */
     protected Connection createConnection() throws SQLException {
         try {
             // The newInstance() call is a work around for some
@@ -155,6 +165,9 @@ public class MemberServlet extends HttpServlet {
         return DriverManager.getConnection(jdbcUrl);
     }
 
+    /**
+     * @Deprecated
+     */
     protected void close(AutoCloseable obj) {
         if (obj != null) {
             try {
@@ -277,32 +290,19 @@ public class MemberServlet extends HttpServlet {
 
         Member member = new Member();
 
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        String sql = "SELECT * from " + MEMBER_TABLE;
+        sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
+        debug("SQL: " + sql);
 
-        try {
-            conn = createConnection();
-            stmt = conn.createStatement();
-            String sql = "SELECT * from " + MEMBER_TABLE;
-            sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
-            debug("SQL: " + sql);
-            rs = stmt.executeQuery(sql);
+        DatabaseService databaseService = new DatabaseService();
+        ResultSet rs = databaseService.executeQuery(sql);
 
-            rs.next();
-            member.setId(rs.getLong(MEMBER_ID));
-            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-            member.setLastName(rs.getString(MEMBER_LAST_NAME));
-        } finally {
-            close(rs);
-            rs = null;
+        rs.next();
+        member.setId(rs.getLong(MEMBER_ID));
+        member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+        member.setLastName(rs.getString(MEMBER_LAST_NAME));
 
-            close(stmt);
-            stmt = null;
-
-            close(conn);
-            conn = null;
-        }
+        databaseService.close();
 
         return member;
     }
