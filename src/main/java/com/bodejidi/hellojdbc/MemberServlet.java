@@ -310,34 +310,21 @@ public class MemberServlet extends HttpServlet {
     public List<Member> findAllMember() throws SQLException {
         List<Member> memberList = new ArrayList<Member>();
 
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        DatabaseService databaseService = new DatabaseService();
+        String sql = "SELECT * from " + MEMBER_TABLE;
+        debug("SQL: " + sql);
 
-        try {
+        rs = databaseService.executeQuery(sql);
 
-            conn = createConnection();
-            stmt = conn.createStatement();
-            String sql = "SELECT * from " + MEMBER_TABLE;
-            debug("SQL: " + sql);
-            rs = stmt.executeQuery(sql);
-            while(rs.next()) {
-                Member member = new Member();
-                member.setId(rs.getLong(MEMBER_ID));
-                member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-                member.setLastName(rs.getString(MEMBER_LAST_NAME));
-                memberList.add(member);
-            }
-        } finally {
-            close(rs);
-            rs = null;
-
-            close(stmt);
-            stmt = null;
-
-            close(conn);
-            conn = null;
+        while(rs.next()) {
+            Member member = new Member();
+            member.setId(rs.getLong(MEMBER_ID));
+            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+            member.setLastName(rs.getString(MEMBER_LAST_NAME));
+            memberList.add(member);
         }
+
+        databaseService.close();
 
         return memberList;
     }
