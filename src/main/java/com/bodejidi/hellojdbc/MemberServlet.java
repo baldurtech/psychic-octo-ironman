@@ -79,15 +79,7 @@ public class MemberServlet extends HttpServlet {
             if(id == null) {
                 create(req, resp);
             } else if ("Delete".equalsIgnoreCase(action)) {
-                String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
-                debug("SQL: " + sql);
-
-                DatabaseService ds = DatabaseService.newInstance();
-                ds.execute(sql);
-                ds.close();
-
-                out.println("Delete ID=" + id + " success!");
-                out.println("<br/><a href=\"\">Member List</a>");
+                delete(req ,resp);
             } else if("Update".equalsIgnoreCase(action)){
                 String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
                 debug("SQL: " + sql);
@@ -273,6 +265,33 @@ public class MemberServlet extends HttpServlet {
             debug("SQLState: " + ex.getSQLState());
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error: Cannot create member!");
+        }
+    }
+
+    public void delete(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        String id = req.getParameter(MEMBER_FORM_ID);
+
+        try{
+            String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
+            debug("SQL: " + sql);
+
+            DatabaseService ds = DatabaseService.newInstance();
+            ds.execute(sql);
+            ds.close();
+
+            out.println("Delete ID=" + id + " success!");
+            out.println("<br/><a href=\"\">Member List</a>");
+
+        } catch (SQLException ex) {
+            // handle any errors
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
+            out.println("Error: Cannot delete member, id=" + id + "!");
         }
     }
 
