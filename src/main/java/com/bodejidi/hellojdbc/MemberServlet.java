@@ -46,15 +46,12 @@ public class MemberServlet extends HttpServlet {
             return;
         }
 
-        if("Create".equalsIgnoreCase(action)) {
-            create(req, resp);
-            return;
-        }
-
-        if("List".equalsIgnoreCase(action)) {
+        switch(action.toLowerCase()) {
+        case "create" : create(req, resp); break;
+        case "show"   : show(req, resp); break;
+        case "list"   :
+        default       :
             list(req, resp);
-        } else if("Show".equalsIgnoreCase(action)) {
-            show(req, resp);
         }
     }
 
