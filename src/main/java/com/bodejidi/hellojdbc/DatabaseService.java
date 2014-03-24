@@ -19,15 +19,12 @@ public class DatabaseService {
 
     }
 
-    public ResultSet executeQuery(String sql) {
-        try {
-            conn = createConnection();
-            stmt = conn.createStatement();
-            return stmt.executeQuery(sql);
-        } catch(SQLException e) {
+    public ResultSet executeQuery(String sql)
+        throws SQLException {
 
-        }
-        return null;
+        conn = createConnection();
+        stmt = conn.createStatement();
+        return stmt.executeQuery(sql);
     }
 
     public void close() {
