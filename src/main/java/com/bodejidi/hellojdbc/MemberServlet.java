@@ -108,6 +108,26 @@ public class MemberServlet extends HttpServlet {
         return "Welcome, admin. <a href=\"member?action=Logout\">logout</a>";
     }
 
+    public void create(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+        out.println("<html>");
+        out.println("  <head>");
+        out.println("    <title>会员管理</title>");
+        out.println("  </head>");
+        out.println("  <body>");
+        out.println("    <h1>会员管理</h1>");
+        out.println("    <form action=\"member\" method=\"POST\">");
+        out.println("      <label>First Name: <input type=\"text\" name=\"first_name\"/></label>");
+        out.println("      <label>Last Name: <input type=\"text\" name=\"last_name\"/></label>");
+        out.println("      <input type=\"submit\" value=\"新增\"/>");
+        out.println("    </form>");
+        out.println("    <p><a href=\"member\">Member List</a></p>");
+        out.println("  </body>");
+        out.println("</html>");
+    }
+
     public void list(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
