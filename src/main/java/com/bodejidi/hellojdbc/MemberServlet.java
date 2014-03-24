@@ -2,7 +2,6 @@ package com.bodejidi.hellojdbc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.AutoCloseable;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,23 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class MemberServlet extends HttpServlet {
-
-    /**
-     * @Deprecated
-     */
-    static final String jdbcUrl = "jdbc:mysql://localhost/hellojdbc?user=root&password=";
-
-    /**
-     * @Deprecated
-     */
-    static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
     static final String contentType = "text/html; charset=UTF-8";
 
@@ -145,34 +131,6 @@ public class MemberServlet extends HttpServlet {
             debug("SQLState: " + ex.getSQLState());
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
-        }
-    }
-
-    /**
-     * @Deprecated
-     */
-    protected Connection createConnection() throws SQLException {
-        try {
-            // The newInstance() call is a work around for some
-            // broken Java implementations
-            Class.forName(jdbcDriver).newInstance();
-        } catch (Exception ex) {
-            // handle the error
-        }
-
-        return DriverManager.getConnection(jdbcUrl);
-    }
-
-    /**
-     * @Deprecated
-     */
-    protected void close(AutoCloseable obj) {
-        if (obj != null) {
-            try {
-                obj.close();
-            } catch (Exception e) {
-                // ignore
-            }
         }
     }
 
