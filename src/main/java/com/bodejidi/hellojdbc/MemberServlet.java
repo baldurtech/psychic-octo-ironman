@@ -53,11 +53,7 @@ public class MemberServlet extends HttpServlet {
         resp.setContentType(contentType);
         String action = req.getParameter(FORM_SUBMIT_ACTION);
 
-        PrintWriter out = resp.getWriter();
-
         String id = req.getParameter(MEMBER_FORM_ID);
-        String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
-        String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
 
         if ("Login".equalsIgnoreCase(action)) {
             String username = req.getParameter("username");
