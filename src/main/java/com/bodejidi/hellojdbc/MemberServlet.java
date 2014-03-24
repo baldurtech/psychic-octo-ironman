@@ -314,7 +314,7 @@ public class MemberServlet extends HttpServlet {
         String sql = "SELECT * from " + MEMBER_TABLE;
         debug("SQL: " + sql);
 
-        rs = databaseService.executeQuery(sql);
+        ResultSet rs = databaseService.executeQuery(sql);
 
         while(rs.next()) {
             Member member = new Member();
