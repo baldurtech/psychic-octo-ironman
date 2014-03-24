@@ -116,7 +116,9 @@ public class MemberServlet extends HttpServlet {
                     String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
                         + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
                     debug("SQL: " + sql);
-                    stmt.execute(sql);
+                    DatabaseService ds = DatabaseService.newInstance();
+                    ds.execute(sql);
+                    ds.close();
                     out.println("Add " + firstName + " " + lastName + " success!");
                 } else {
                     out.println("Error: first name or last name cannot be empty.");
