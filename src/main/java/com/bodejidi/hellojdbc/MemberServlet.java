@@ -59,44 +59,28 @@ public class MemberServlet extends HttpServlet {
         String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
         String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
 
-        try {
-            if ("Login".equalsIgnoreCase(action)) {
-                String username = req.getParameter("username");
-                String password = req.getParameter("password");
+        if ("Login".equalsIgnoreCase(action)) {
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
 
-                if(username.equalsIgnoreCase("admin") &&
-                   password.equals("s3cr3t")) {
-                    HttpSession session = req.getSession();
-                    session.setAttribute("memberId", 0L);
+            if(username.equalsIgnoreCase("admin") &&
+               password.equals("s3cr3t")) {
+                HttpSession session = req.getSession();
+                session.setAttribute("memberId", 0L);
 
-                    showLoginSuccess(req, resp);
-                } else {
-                    showLoginFail(req, resp);
-                }
-                return;
+                showLoginSuccess(req, resp);
+            } else {
+                showLoginFail(req, resp);
             }
+            return;
+        }
 
-            if(id == null) {
-                create(req, resp);
-            } else if ("Delete".equalsIgnoreCase(action)) {
-                delete(req ,resp);
-            } else if("Update".equalsIgnoreCase(action)){
-                String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
-                debug("SQL: " + sql);
-
-                DatabaseService ds = DatabaseService.newInstance();
-                ds.execute(sql);
-                ds.close();
-
-                out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
-                out.println("<br/><a href=\"\">Member List</a>");
-            }
-        } catch (SQLException ex) {
-            // handle any errors
-            debug("SQLException: " + ex.getMessage());
-            debug("SQLState: " + ex.getSQLState());
-            debug("VendorError: " + ex.getErrorCode());
-            out.println("Error!");
+        if(id == null) {
+            create(req, resp);
+        } else if ("Delete".equalsIgnoreCase(action)) {
+            delete(req ,resp);
+        } else if("Update".equalsIgnoreCase(action)){
+            update(req, resp);
         }
     }
 
@@ -292,6 +276,34 @@ public class MemberServlet extends HttpServlet {
             debug("SQLState: " + ex.getSQLState());
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error: Cannot delete member, id=" + id + "!");
+        }
+    }
+
+    public void update(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        PrintWriter out = resp.getWriter();
+
+        String id = req.getParameter(MEMBER_FORM_ID);
+        String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
+        String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
+
+        try{
+            String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
+            debug("SQL: " + sql);
+
+            DatabaseService ds = DatabaseService.newInstance();
+            ds.execute(sql);
+            ds.close();
+
+            out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
+            out.println("<br/><a href=\"\">Member List</a>");
+        } catch (SQLException ex) {
+            // handle any errors
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
+            out.println("Error: Cannot Update member, id=" + id + "!");
         }
     }
 
