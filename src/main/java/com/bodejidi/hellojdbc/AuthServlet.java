@@ -11,7 +11,18 @@ import javax.servlet.http.HttpSession;
 public class AuthServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        showLoginPage(req, resp);
+        if(isNotLogin(req)) {
+            showLoginPage(req, resp);
+        } else {
+            resp.sendRedirect("/hellojdbc");
+        }
+    }
+
+    public boolean isNotLogin(HttpServletRequest req)
+        throws IOException, ServletException {
+
+        Long memberId = (Long)req.getSession().getAttribute("memberId");
+        return null == memberId;
     }
 
     public void showLoginPage(HttpServletRequest req, HttpServletResponse resp)
