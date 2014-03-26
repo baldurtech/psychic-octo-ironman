@@ -59,18 +59,7 @@ public class MemberServlet extends HttpServlet {
         String id = req.getParameter(MEMBER_FORM_ID);
 
         if ("Login".equalsIgnoreCase(action)) {
-            String username = req.getParameter("username");
-            String password = req.getParameter("password");
-
-            if(username.equalsIgnoreCase("admin") &&
-               password.equals("s3cr3t")) {
-                HttpSession session = req.getSession();
-                session.setAttribute("memberId", 0L);
-
-                showLoginSuccess(req, resp);
-            } else {
-                showLoginFail(req, resp);
-            }
+            login(req ,resp);
             return;
         }
 
@@ -105,6 +94,23 @@ public class MemberServlet extends HttpServlet {
         out.println("    </form>");
         out.println("  </body>");
         out.println("</html>");
+    }
+
+    public void login(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        if(username.equalsIgnoreCase("admin") &&
+           password.equals("s3cr3t")) {
+            HttpSession session = req.getSession();
+            session.setAttribute("memberId", 0L);
+
+            showLoginSuccess(req, resp);
+        } else {
+            showLoginFail(req, resp);
+        }
     }
 
     public void logout(HttpServletRequest req, HttpServletResponse resp)
