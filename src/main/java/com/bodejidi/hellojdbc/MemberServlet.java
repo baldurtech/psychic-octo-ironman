@@ -114,6 +114,7 @@ public class MemberServlet extends HttpServlet {
         throws IOException, ServletException {
 
         req.getSession().removeAttribute("memberId");
+        resp.sendRedirect("member?action=Login");
     }
 
     public String showLoginInfo() {
