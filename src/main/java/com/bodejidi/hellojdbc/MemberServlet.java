@@ -136,8 +136,8 @@ public class MemberServlet extends HttpServlet {
         resp.sendRedirect("member?action=Login");
     }
 
-    public String showLoginInfo() {
-        return "Welcome, admin. <a href=\"member?action=Logout\">logout</a>";
+    public String showLoginInfo(HttpServletRequest req) {
+        return "Welcome, admin. <a href=\"" + req.getContextPath() + "/auth/logout\">logout</a>";
     }
 
     public void create(HttpServletRequest req, HttpServletResponse resp)
@@ -169,7 +169,7 @@ public class MemberServlet extends HttpServlet {
         try {
             out.println("<html><head><title>Member List</title></head>\n"
                         + "<body>\n"
-                        + showLoginInfo()
+                        + showLoginInfo(req)
                         + "<h1>Member List</h1>\n"
                         + "<table border=\"1\"><tr><td>ID</td>"
                         + "<td>Name</td></tr>\n");
@@ -202,7 +202,7 @@ public class MemberServlet extends HttpServlet {
             Member member = getMemberById(paramId);
 
             out.println("<html><head><title>Member</title></head><body>"
-                        + showLoginInfo()
+                        + showLoginInfo(req)
                         + "  <h1>Member</h1>"
                         + "  <form action=\"member\" method=\"POST\">"
                         + "    <table border=\"1\">\n");
