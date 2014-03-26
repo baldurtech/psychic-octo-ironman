@@ -70,7 +70,7 @@ public class AuthServlet extends HttpServlet {
         out.println("<html>");
         out.println("  <head>");
         out.println("    <meta http-equiv=\"refresh\""
-                    + " content=\"" + timeout + "; URL=member?action=List\">");
+                    + " content=\"" + timeout + "; URL=" + req.getContextPath() + "/member?action=List\">");
         out.println("    <title>Login Success</title>");
         out.println("  </head>");
         out.println("  <body>");
