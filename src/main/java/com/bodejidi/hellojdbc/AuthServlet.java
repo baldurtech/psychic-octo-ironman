@@ -11,6 +11,11 @@ import javax.servlet.http.HttpSession;
 public class AuthServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        if(req.getRequestURI().endsWith("/logout")) {
+            logout(req, resp);
+            return;
+        }
+
         if(isNotLogin(req)) {
             showLoginPage(req, resp);
         } else {
