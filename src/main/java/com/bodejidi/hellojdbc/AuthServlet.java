@@ -29,6 +29,13 @@ public class AuthServlet extends HttpServlet {
         return null == memberId;
     }
 
+    public void logout(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        req.getSession().removeAttribute("memberId");
+        resp.sendRedirect("member?action=Login");
+    }
+
     public void login(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
