@@ -31,15 +31,15 @@ public class MemberServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        String action = req.getParameter("action");
-        if(null == action || "".equals(action)) {
-            action = "List";
-        }
-
         Long memberId = (Long)session.getAttribute("memberId");
         if(memberId == null) {
             login(req, resp);
             return;
+        }
+
+        String action = req.getParameter("action");
+        if(null == action || "".equals(action)) {
+            action = "List";
         }
 
         switch(action.toLowerCase()) {
