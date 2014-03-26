@@ -29,8 +29,6 @@ public class MemberServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType(contentType);
 
-        HttpSession session = req.getSession();
-
         if(isNotLogin(req)) {
             showLoginPage(req, resp);
             return;
