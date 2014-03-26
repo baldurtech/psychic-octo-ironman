@@ -33,7 +33,7 @@ public class MemberServlet extends HttpServlet {
 
         Long memberId = (Long)session.getAttribute("memberId");
         if(memberId == null) {
-            login(req, resp);
+            showLoginPage(req, resp);
             return;
         }
 
@@ -87,7 +87,7 @@ public class MemberServlet extends HttpServlet {
         System.out.println("[DEBUG] " + (new Date()) + " " + str);
     }
 
-    public void login(HttpServletRequest req, HttpServletResponse resp)
+    public void showLoginPage(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
         PrintWriter out = resp.getWriter();
