@@ -13,6 +13,16 @@
   </description>
 
   <servlet>
+    <servlet-name>auth</servlet-name>
+    <servlet-class>com.bodejidi.hellojdbc.AuthServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>auth</servlet-name>
+    <url-pattern>/auth/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>member</servlet-name>
     <servlet-class>com.bodejidi.hellojdbc.MemberServlet</servlet-class>
   </servlet>
