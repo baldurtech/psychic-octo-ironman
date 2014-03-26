@@ -26,7 +26,7 @@ public class MemberServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         if(isNotLogin(req)) {
-            showLoginPage(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
 
@@ -54,7 +54,7 @@ public class MemberServlet extends HttpServlet {
         }
 
         if(isNotLogin(req)) {
-            showLoginPage(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
 
