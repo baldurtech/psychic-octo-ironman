@@ -51,6 +51,12 @@ public class MemberServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType(contentType);
+
+        if(isNotLogin(req)) {
+            showLoginPage(req, resp);
+            return;
+        }
+
         String action = req.getParameter(FORM_SUBMIT_ACTION);
 
         if ("Login".equalsIgnoreCase(action)) {
