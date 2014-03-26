@@ -14,7 +14,7 @@ public class AuthServlet extends HttpServlet {
         if(isNotLogin(req)) {
             showLoginPage(req, resp);
         } else {
-            resp.sendRedirect("/hellojdbc");
+            resp.sendRedirect(req.getContextPath());
         }
     }
 
