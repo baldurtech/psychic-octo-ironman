@@ -79,18 +79,19 @@ public class AuthServlet extends HttpServlet {
         throws IOException, ServletException {
 
         Integer timeout = 5;
+        String redirectTo = req.getContextPath() + "/member?action=List";
         PrintWriter out = resp.getWriter();
         out.println("<html>");
         out.println("  <head>");
         out.println("    <meta http-equiv=\"refresh\""
-                    + " content=\"" + timeout + "; URL=" + req.getContextPath() + "/member?action=List\">");
+                    + " content=\"" + timeout + "; URL=" + redirectTo + "\">");
         out.println("    <title>Login Success</title>");
         out.println("  </head>");
         out.println("  <body>");
         out.println("    <h1>Welcome Admin!</h1>");
         out.println("    Please wait for " + timeout
                     + " seconds, if not redirect please click ");
-        out.println("    <a href=\"member\">Member list</a>");
+        out.println("    <a href=\"" + redirectTo + "\">here</a>.");
         out.println("  </body>");
         out.println("</html>");
     }
