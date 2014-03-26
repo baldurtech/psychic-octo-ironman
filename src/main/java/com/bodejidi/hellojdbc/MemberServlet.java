@@ -36,7 +36,6 @@ public class MemberServlet extends HttpServlet {
         }
 
         switch(action.toLowerCase()) {
-        case "logout" : logout(req, resp); break;
         case "create" : create(req, resp); break;
         case "show"   : show(req, resp); break;
         case "list"   :
@@ -47,11 +46,6 @@ public class MemberServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter(FORM_SUBMIT_ACTION);
-
-        if ("Login".equalsIgnoreCase(action)) {
-            login(req ,resp);
-            return;
-        }
 
         if(isNotLogin(req)) {
             resp.sendRedirect(req.getContextPath() + "/auth/login");
@@ -81,59 +75,6 @@ public class MemberServlet extends HttpServlet {
 
         Long memberId = (Long)req.getSession().getAttribute("memberId");
         return null == memberId;
-    }
-
-    /**
-     * @Deprecated
-     */
-    public void showLoginPage(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
-
-        PrintWriter out = resp.getWriter();
-
-        out.println("<html>");
-        out.println("  <head>");
-        out.println("    <title>Login</title>");
-        out.println("  </head>");
-        out.println("  <body>");
-        out.println("    <h1>Please Login!</h1>");
-        out.println("    <form action=\"member\" method=\"POST\">");
-        out.println("      <label>Username: <input type=\"text\" name=\"username\"/></label>");
-        out.println("      <label>Password: <input type=\"password\" name=\"password\"/></label>");
-        out.println("      <input type=\"submit\" name=\"action\" value=\"Login\" />");
-        out.println("    </form>");
-        out.println("  </body>");
-        out.println("</html>");
-    }
-
-    /**
-     * @Deprecated
-     */
-    public void login(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
-
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-
-        if(username.equalsIgnoreCase("admin") &&
-           password.equals("s3cr3t")) {
-            HttpSession session = req.getSession();
-            session.setAttribute("memberId", 0L);
-
-            showLoginSuccess(req, resp);
-        } else {
-            showLoginFail(req, resp);
-        }
-    }
-
-    /**
-     * @Deprecated
-     */
-    public void logout(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
-
-        req.getSession().removeAttribute("memberId");
-        resp.sendRedirect("member?action=Login");
     }
 
     public String showLoginInfo(HttpServletRequest req) {
@@ -238,48 +179,6 @@ public class MemberServlet extends HttpServlet {
             debug("VendorError: " + ex.getErrorCode());
             out.println("Error!");
         }
-    }
-
-    /**
-     * @Deprecated
-     */
-    public void showLoginFail(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
-
-        PrintWriter out = resp.getWriter();
-
-        out.println("<html>");
-        out.println("  <head>");
-        out.println("    <title>Login Fail!</title>");
-        out.println("  </head>");
-        out.println("  <body>");
-        out.println("    <h1>Login Fail!</h1>");
-        out.println("  </body>");
-        out.println("</html>");
-
-    }
-
-    /**
-     * @Deprecated
-     */
-    public void showLoginSuccess(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
-
-        Integer timeout = 5;
-        PrintWriter out = resp.getWriter();
-        out.println("<html>");
-        out.println("  <head>");
-        out.println("    <meta http-equiv=\"refresh\""
-                    + " content=\"" + timeout + "; URL=member?action=List\">");
-        out.println("    <title>Login Success</title>");
-        out.println("  </head>");
-        out.println("  <body>");
-        out.println("    <h1>Welcome Admin!</h1>");
-        out.println("    Please wait for " + timeout
-                    + " seconds, if not redirect please click ");
-        out.println("    <a href=\"member\">Member list</a>");
-        out.println("  </body>");
-        out.println("</html>");
     }
 
     public void save(HttpServletRequest req, HttpServletResponse resp)
