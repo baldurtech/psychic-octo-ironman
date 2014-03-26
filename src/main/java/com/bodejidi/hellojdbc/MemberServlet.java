@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 
 public class MemberServlet extends HttpServlet {
 
-    static final String contentType = "text/html; charset=UTF-8";
+    static final String contentType = "text/html";
 
     static final String MEMBER_TABLE = "member";
     static final String MEMBER_ID = "id";
