@@ -56,8 +56,6 @@ public class MemberServlet extends HttpServlet {
         resp.setContentType(contentType);
         String action = req.getParameter(FORM_SUBMIT_ACTION);
 
-        String id = req.getParameter(MEMBER_FORM_ID);
-
         if ("Login".equalsIgnoreCase(action)) {
             login(req ,resp);
             return;
