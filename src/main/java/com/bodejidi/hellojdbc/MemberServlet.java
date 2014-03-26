@@ -73,6 +73,9 @@ public class MemberServlet extends HttpServlet {
         System.out.println("[DEBUG] " + (new Date()) + " " + str);
     }
 
+    /**
+     * @Deprecated
+     */
     public boolean isNotLogin(HttpServletRequest req)
         throws IOException, ServletException {
 
@@ -80,6 +83,9 @@ public class MemberServlet extends HttpServlet {
         return null == memberId;
     }
 
+    /**
+     * @Deprecated
+     */
     public void showLoginPage(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
@@ -100,6 +106,9 @@ public class MemberServlet extends HttpServlet {
         out.println("</html>");
     }
 
+    /**
+     * @Deprecated
+     */
     public void login(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
@@ -117,6 +126,9 @@ public class MemberServlet extends HttpServlet {
         }
     }
 
+    /**
+     * @Deprecated
+     */
     public void logout(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
@@ -228,6 +240,9 @@ public class MemberServlet extends HttpServlet {
         }
     }
 
+    /**
+     * @Deprecated
+     */
     public void showLoginFail(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
@@ -244,6 +259,9 @@ public class MemberServlet extends HttpServlet {
 
     }
 
+    /**
+     * @Deprecated
+     */
     public void showLoginSuccess(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
