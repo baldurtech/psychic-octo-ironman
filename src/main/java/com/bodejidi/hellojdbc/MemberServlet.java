@@ -63,7 +63,7 @@ public class MemberServlet extends HttpServlet {
             return;
         }
 
-        if(id == null) {
+        if("Save".equalsIgnoreCase(action)) {
             save(req, resp);
         } else if ("Delete".equalsIgnoreCase(action)) {
             delete(req ,resp);
@@ -137,6 +137,7 @@ public class MemberServlet extends HttpServlet {
         out.println("    <form action=\"member\" method=\"POST\">");
         out.println("      <label>First Name: <input type=\"text\" name=\"first_name\"/></label>");
         out.println("      <label>Last Name: <input type=\"text\" name=\"last_name\"/></label>");
+        out.println("      <input type=\"hidden\" name=\"action\" value=\"Save\"/>");
         out.println("      <input type=\"submit\" value=\"新增\"/>");
         out.println("    </form>");
         out.println("    <p><a href=\"member\">Member List</a></p>");
