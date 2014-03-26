@@ -15,8 +15,6 @@ import java.sql.ResultSet;
 
 public class MemberServlet extends HttpServlet {
 
-    static final String contentType = "text/html";
-
     static final String MEMBER_TABLE = "member";
     static final String MEMBER_ID = "id";
     static final String MEMBER_FIRST_NAME = "first_name";
@@ -27,8 +25,6 @@ public class MemberServlet extends HttpServlet {
     static final String FORM_SUBMIT_ACTION = "action";
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        resp.setContentType(contentType);
-
         if(isNotLogin(req)) {
             showLoginPage(req, resp);
             return;
@@ -50,8 +46,6 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        resp.setContentType(contentType);
-
         String action = req.getParameter(FORM_SUBMIT_ACTION);
 
         if ("Login".equalsIgnoreCase(action)) {
