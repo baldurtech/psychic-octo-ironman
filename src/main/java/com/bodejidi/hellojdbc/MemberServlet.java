@@ -37,7 +37,7 @@ public class MemberServlet extends HttpServlet {
         }
 
         if("Logout".equalsIgnoreCase(action)) {
-            session.removeAttribute("memberId");
+            logout(req, resp);
         }
 
         Long memberId = (Long)session.getAttribute("memberId");
@@ -108,6 +108,12 @@ public class MemberServlet extends HttpServlet {
         out.println("    </form>");
         out.println("  </body>");
         out.println("</html>");
+    }
+
+    public void logout(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        req.getSession().removeAttribute("memberId");
     }
 
     public String showLoginInfo() {
