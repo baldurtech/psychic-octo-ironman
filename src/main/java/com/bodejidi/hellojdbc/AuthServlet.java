@@ -57,6 +57,7 @@ public class AuthServlet extends HttpServlet {
         out.println("  </head>");
         out.println("  <body>");
         out.println("    <h1>Login Fail!</h1>");
+        out.println("    <a href=\"" + req.getRequestURI() + "\">login again!</a>");
         out.println("  </body>");
         out.println("</html>");
 
