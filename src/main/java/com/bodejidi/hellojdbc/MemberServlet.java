@@ -232,13 +232,18 @@ public class MemberServlet extends HttpServlet {
     public void showLoginSuccess(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
 
+        Integer timeout = 5;
         PrintWriter out = resp.getWriter();
         out.println("<html>");
         out.println("  <head>");
+        out.println("    <meta http-equiv=\"refresh\""
+                    + " content=\"" + timeout + "; URL=member?action=List\">");
         out.println("    <title>Login Success</title>");
         out.println("  </head>");
         out.println("  <body>");
         out.println("    <h1>Welcome Admin!</h1>");
+        out.println("    Please wait for " + timeout
+                    + " seconds, if not redirect please click ");
         out.println("    <a href=\"member\">Member list</a>");
         out.println("  </body>");
         out.println("</html>");
