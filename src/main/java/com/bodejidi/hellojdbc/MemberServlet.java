@@ -31,8 +31,7 @@ public class MemberServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        Long memberId = (Long)session.getAttribute("memberId");
-        if(memberId == null) {
+        if(isNotLogin(req)) {
             showLoginPage(req, resp);
             return;
         }
@@ -72,6 +71,13 @@ public class MemberServlet extends HttpServlet {
 
     public void debug(String str) {
         System.out.println("[DEBUG] " + (new Date()) + " " + str);
+    }
+
+    public boolean isNotLogin(HttpServletRequest req)
+        throws IOException, ServletException {
+
+        Long memberId = (Long)req.getSession().getAttribute("memberId");
+        return null == memberId;
     }
 
     public void showLoginPage(HttpServletRequest req, HttpServletResponse resp)
