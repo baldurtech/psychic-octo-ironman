@@ -33,7 +33,7 @@ public class AuthServlet extends HttpServlet {
         throws IOException, ServletException {
 
         req.getSession().removeAttribute("memberId");
-        resp.sendRedirect("member?action=Login");
+        resp.sendRedirect(req.getContextPath());
     }
 
     public void login(HttpServletRequest req, HttpServletResponse resp)
