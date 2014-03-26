@@ -70,6 +70,8 @@ public class MemberServlet extends HttpServlet {
             delete(req ,resp);
         } else if("Update".equalsIgnoreCase(action)){
             update(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Operation not allowed.");
         }
     }
 
