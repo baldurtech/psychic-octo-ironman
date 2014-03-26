@@ -36,10 +36,6 @@ public class MemberServlet extends HttpServlet {
             action = "List";
         }
 
-        if("Logout".equalsIgnoreCase(action)) {
-            logout(req, resp);
-        }
-
         Long memberId = (Long)session.getAttribute("memberId");
         if(memberId == null) {
             login(req, resp);
@@ -47,6 +43,7 @@ public class MemberServlet extends HttpServlet {
         }
 
         switch(action.toLowerCase()) {
+        case "logout" : logout(req, resp); break;
         case "create" : create(req, resp); break;
         case "show"   : show(req, resp); break;
         case "list"   :
