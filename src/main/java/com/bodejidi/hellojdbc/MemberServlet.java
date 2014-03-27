@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -63,23 +64,8 @@ public class MemberServlet extends HttpServlet {
 
     public void create(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
-
-        PrintWriter out = resp.getWriter();
-        out.println("<html>");
-        out.println("  <head>");
-        out.println("    <title>新增会员</title>");
-        out.println("  </head>");
-        out.println("  <body>");
-        out.println("    <h1>新增会员</h1>");
-        out.println("    <form action=\"member\" method=\"POST\">");
-        out.println("      <label>First Name: <input type=\"text\" name=\"first_name\"/></label>");
-        out.println("      <label>Last Name: <input type=\"text\" name=\"last_name\"/></label>");
-        out.println("      <input type=\"hidden\" name=\"action\" value=\"Save\"/>");
-        out.println("      <input type=\"submit\" value=\"新增\"/>");
-        out.println("    </form>");
-        out.println("    <p><a href=\"member\">Member List</a></p>");
-        out.println("  </body>");
-        out.println("</html>");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/member/create.jsp");
+        dispatcher.forward(req, resp);
     }
 
     public void list(HttpServletRequest req, HttpServletResponse resp)
