@@ -42,16 +42,23 @@ public class MemberServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter(FORM_SUBMIT_ACTION);
-
-        if("Save".equalsIgnoreCase(action)) {
-            save(req, resp);
-        } else if ("Delete".equalsIgnoreCase(action)) {
-            delete(req ,resp);
-        } else if("Update".equalsIgnoreCase(action)){
-            update(req, resp);
-        } else {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Operation not allowed.");
+        try{
+            if("Save".equalsIgnoreCase(action)) {
+                save(req, resp);
+            } else if ("Delete".equalsIgnoreCase(action)) {
+                delete(req ,resp);
+            } else if("Update".equalsIgnoreCase(action)){
+                update(req, resp);
+            } else {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Operation not allowed.");
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            debug("SQLException: " + ex.getMessage());
+            debug("SQLState: " + ex.getSQLState());
+            debug("VendorError: " + ex.getErrorCode());
         }
+
     }
 
     public void debug(String str) {
@@ -103,64 +110,47 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void save(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
+        throws IOException, ServletException, SQLException {
 
         PrintWriter out = resp.getWriter();
 
-        try{
-            String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
-            String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
+        String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
+        String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
 
-            if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
-                String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
-                    + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-                debug("SQL: " + sql);
-                DatabaseService ds = DatabaseService.newInstance();
-                ds.execute(sql);
-                ds.close();
-                out.println("Add " + firstName + " " + lastName + " success!");
-            } else {
-                out.println("Error: first name or last name cannot be empty.");
-            }
-            out.println("<br/><a href=\"\">Member List</a>");
-        } catch (SQLException ex) {
-            // handle any errors
-            debug("SQLException: " + ex.getMessage());
-            debug("SQLState: " + ex.getSQLState());
-            debug("VendorError: " + ex.getErrorCode());
-            out.println("Error: Cannot create member!");
+        if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
+            String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
+                + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+            debug("SQL: " + sql);
+            DatabaseService ds = DatabaseService.newInstance();
+            ds.execute(sql);
+            ds.close();
+            out.println("Add " + firstName + " " + lastName + " success!");
+        } else {
+            out.println("Error: first name or last name cannot be empty.");
         }
+        out.println("<br/><a href=\"\">Member List</a>");
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
+        throws IOException, ServletException, SQLException {
 
         PrintWriter out = resp.getWriter();
 
         String id = req.getParameter(MEMBER_FORM_ID);
 
-        try{
-            String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
-            debug("SQL: " + sql);
+        String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
+        debug("SQL: " + sql);
 
-            DatabaseService ds = DatabaseService.newInstance();
-            ds.execute(sql);
-            ds.close();
+        DatabaseService ds = DatabaseService.newInstance();
+        ds.execute(sql);
+        ds.close();
 
-            out.println("Delete ID=" + id + " success!");
-            out.println("<br/><a href=\"\">Member List</a>");
-
-        } catch (SQLException ex) {
-            // handle any errors
-            debug("SQLException: " + ex.getMessage());
-            debug("SQLState: " + ex.getSQLState());
-            debug("VendorError: " + ex.getErrorCode());
-            out.println("Error: Cannot delete member, id=" + id + "!");
-        }
+        out.println("Delete ID=" + id + " success!");
+        out.println("<br/><a href=\"\">Member List</a>");
     }
 
     public void update(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
+        throws IOException, ServletException, SQLException {
 
         PrintWriter out = resp.getWriter();
 
@@ -168,23 +158,15 @@ public class MemberServlet extends HttpServlet {
         String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
         String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
 
-        try{
-            String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
-            debug("SQL: " + sql);
+        String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
+        debug("SQL: " + sql);
 
-            DatabaseService ds = DatabaseService.newInstance();
-            ds.execute(sql);
-            ds.close();
+        DatabaseService ds = DatabaseService.newInstance();
+        ds.execute(sql);
+        ds.close();
 
-            out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
-            out.println("<br/><a href=\"\">Member List</a>");
-        } catch (SQLException ex) {
-            // handle any errors
-            debug("SQLException: " + ex.getMessage());
-            debug("SQLState: " + ex.getSQLState());
-            debug("VendorError: " + ex.getErrorCode());
-            out.println("Error: Cannot Update member, id=" + id + "!");
-        }
+        out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
+        out.println("<br/><a href=\"\">Member List</a>");
     }
 
     public Member getMemberById(String paramId)
