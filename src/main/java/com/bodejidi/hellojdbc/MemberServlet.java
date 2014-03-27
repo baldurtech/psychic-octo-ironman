@@ -147,8 +147,8 @@ public class MemberServlet extends HttpServlet {
         ds.execute(sql);
         ds.close();
 
-        out.println("Delete ID=" + id + " success!");
-        out.println("<br/><a href=\"\">Member List</a>");
+        req.setAttribute("flash.message", "Delete ID=" + id + " success!");
+        forward("result", req, resp);
     }
 
     public void update(HttpServletRequest req, HttpServletResponse resp)
