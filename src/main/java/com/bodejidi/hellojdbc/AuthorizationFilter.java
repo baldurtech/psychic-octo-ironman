@@ -22,7 +22,7 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        if(!req.getRequestURI().startsWith(req.getContextPath() + "/auth/") && isNotLogin(req)) {
+        if(isNotAuthUrl(req) && isNotLogin(req)) {
             ((HttpServletResponse)response).sendRedirect(req.getContextPath() + "/auth/login");
             return;
         }
@@ -32,6 +32,10 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void destroy() {
         // pass
+    }
+
+    public boolean isNotAuthUrl(HttpServletRequest req) {
+        return ! req.getRequestURI().startsWith(req.getContextPath() + "/auth/");
     }
 
     public boolean isNotLogin(HttpServletRequest req)
