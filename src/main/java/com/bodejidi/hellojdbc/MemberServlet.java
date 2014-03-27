@@ -124,11 +124,13 @@ public class MemberServlet extends HttpServlet {
             DatabaseService ds = DatabaseService.newInstance();
             ds.execute(sql);
             ds.close();
-            out.println("Add " + firstName + " " + lastName + " success!");
+            req.setAttribute("flash.message",
+                             "Add " + firstName + " " + lastName + " success!");
         } else {
-            out.println("Error: first name or last name cannot be empty.");
+            req.setAttribute("flash.errorMessage",
+                             "Error: first name or last name cannot be empty.");
         }
-        out.println("<br/><a href=\"\">Member List</a>");
+        forward("result", req, resp);
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp)
