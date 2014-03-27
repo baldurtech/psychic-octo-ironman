@@ -34,7 +34,7 @@
 
   <servlet-mapping>
     <servlet-name>member</servlet-name>
-    <url-pattern>/member/*</url-pattern>
+    <url-pattern>/member</url-pattern>
   </servlet-mapping>
 
   <filter>
