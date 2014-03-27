@@ -1,5 +1,4 @@
 <%@ page import="com.bodejidi.hellojdbc.Member" %>
-<%@ page pageEncoding="UTF-8" %>
 <%
 Member member = (Member) request.getAttribute("member");
 %>
