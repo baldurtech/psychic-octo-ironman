@@ -107,37 +107,10 @@ public class MemberServlet extends HttpServlet {
         try {
             String paramId = req.getParameter(MEMBER_FORM_ID);
             Member member = getMemberById(paramId);
-
-            out.println("<html><head><title>Member</title></head><body>"
-                        + showLoginInfo(req)
-                        + "  <h1>Member</h1>"
-                        + "  <form action=\"member\" method=\"POST\">"
-                        + "    <table border=\"1\">\n");
-
-            out.println("      <tr><td>ID</td><td>" + member.getId() + "</td></tr>");
-
-            out.println("      <tr><td>First Name</td><td>\n"
-                        + "<input type=\"text\" name=\"first_name\""
-                        + " value=\"" + member.getFirstName() + "\" /></td></tr>");
-
-            out.println("      <tr><td>Last Name</td><td>\n"
-                        + "<input type=\"text\" name=\"last_name\""
-                        + " value=\"" + member.getLastName() + "\" /></td></tr>");
-
-            out.println("    </table>");
-
-            out.println("    <input type=\"hidden\" name=\"id\""
-                        + " value=\"" + member.getId() + "\" />");
-
-            out.println("    <input type=\"submit\" name=\"action\""
-                        + " value=\"Update\" />");
-
-            out.println("    <input type=\"submit\" name=\"action\""
-                        + " value=\"Delete\" />");
-
-            out.println("  </form>");
-            out.println("  <p><a href=\"member\">Member list</a></p>");
-            out.println("</body></html>");
+            req.setAttribute("member", member);
+            getServletContext()
+                .getRequestDispatcher("/WEB-INF/member/show.jsp")
+                .forward(req, resp);
         } catch (SQLException ex) {
             // handle any errors
             debug("SQLException: " + ex.getMessage());
