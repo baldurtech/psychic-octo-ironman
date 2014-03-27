@@ -73,23 +73,8 @@ public class MemberServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         try {
-            out.println("<html><head><title>Member List</title></head>\n"
-                        + "<body>\n"
-                        + showLoginInfo(req)
-                        + "<h1>Member List</h1>\n"
-                        + "<table border=\"1\"><tr><td>ID</td>"
-                        + "<td>Name</td></tr>\n");
-
-            for(Member member: findAllMember()) {
-                out.println("<tr><td><a href=\"?action=Show&id=" + member.getId() + "\">"
-                            + member.getId()
-                            + "</a></td><td>" + member.getFirstName()
-                            + " " + member.getLastName()
-                            + "</td></tr>\n");
-            }
-            out.println("</table>");
-            out.println("<p><a href=\"?action=Create\">Add member</a></p>");
-            out.println("</body></html>");
+            req.setAttribute("memberList", findAllMember());
+            forward("list", req, resp);
         } catch (SQLException ex) {
             // handle any errors
             debug("SQLException: " + ex.getMessage());
