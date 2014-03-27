@@ -25,11 +25,6 @@ public class MemberServlet extends HttpServlet {
     static final String FORM_SUBMIT_ACTION = "action";
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        if(isNotLogin(req)) {
-            resp.sendRedirect(req.getContextPath() + "/auth/login");
-            return;
-        }
-
         String action = req.getParameter("action");
         if(null == action || "".equals(action)) {
             action = "List";
@@ -47,11 +42,6 @@ public class MemberServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter(FORM_SUBMIT_ACTION);
 
-        if(isNotLogin(req)) {
-            resp.sendRedirect(req.getContextPath() + "/auth/login");
-            return;
-        }
-
         if("Save".equalsIgnoreCase(action)) {
             save(req, resp);
         } else if ("Delete".equalsIgnoreCase(action)) {
@@ -65,16 +55,6 @@ public class MemberServlet extends HttpServlet {
 
     public void debug(String str) {
         System.out.println("[DEBUG] " + (new Date()) + " " + str);
-    }
-
-    /**
-     * @Deprecated
-     */
-    public boolean isNotLogin(HttpServletRequest req)
-        throws IOException, ServletException {
-
-        Long memberId = (Long)req.getSession().getAttribute("memberId");
-        return null == memberId;
     }
 
     public String showLoginInfo(HttpServletRequest req) {
