@@ -64,8 +64,7 @@ public class MemberServlet extends HttpServlet {
 
     public void create(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/member/create.jsp");
-        dispatcher.forward(req, resp);
+        forward("create", req, resp);
     }
 
     public void list(HttpServletRequest req, HttpServletResponse resp)
@@ -108,9 +107,7 @@ public class MemberServlet extends HttpServlet {
             String paramId = req.getParameter(MEMBER_FORM_ID);
             Member member = getMemberById(paramId);
             req.setAttribute("member", member);
-            getServletContext()
-                .getRequestDispatcher("/WEB-INF/member/show.jsp")
-                .forward(req, resp);
+            forward("show", req, resp);
         } catch (SQLException ex) {
             // handle any errors
             debug("SQLException: " + ex.getMessage());
@@ -249,5 +246,16 @@ public class MemberServlet extends HttpServlet {
         databaseService.close();
 
         return memberList;
+    }
+
+    public void forward(String page,
+                        HttpServletRequest req,
+                        HttpServletResponse resp)
+        throws IOException, ServletException {
+
+        String jsp = "/WEB-INF/member/" + page + ".jsp";
+        getServletContext()
+            .getRequestDispatcher(jsp)
+            .forward(req, resp);
     }
 }
