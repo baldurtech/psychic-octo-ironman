@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 public class MemberServlet extends HttpServlet {
 
+    static final Logger logger = LoggerFactory.getLogger(MemberServlet.class);
+
     static final String MEMBER_TABLE = "member";
     static final String MEMBER_ID = "id";
     static final String MEMBER_FIRST_NAME = "first_name";
@@ -64,7 +66,6 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void debug(String str) {
-        Logger logger = LoggerFactory.getLogger(MemberServlet.class);
         logger.debug(str);
     }
 
