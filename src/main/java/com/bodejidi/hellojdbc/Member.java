@@ -9,6 +9,10 @@ public class Member {
     private Date dateCreated;
     private Date lastUpdated;
 
+    public String toString() {
+        return firstName + " " + lastName;
+    }
+
     public Long getId() {
         return id;
     }
