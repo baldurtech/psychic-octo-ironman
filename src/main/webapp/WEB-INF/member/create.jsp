@@ -3,6 +3,7 @@
     <title>新增会员</title>
   </head>
   <body>
+    <%@ include file="../common/header.jsp"%>
     <h1>新增会员</h1>
     <form action="member" method="POST">
       <label>First Name: <input type="text" name="first_name"/></label>

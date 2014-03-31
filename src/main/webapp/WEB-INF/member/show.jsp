@@ -7,7 +7,7 @@ Member member = (Member) request.getAttribute("member");
     <title>Member</title>
   </head>
   <body>
-    Welcome, admin. <a href="/hellojdbc/auth/logout">logout</a>
+    <%@ include file="../common/header.jsp"%>
     <h1><%= member.getId() %>号会员</h1>
     <form action="member" method="POST">
       <table border="1">
