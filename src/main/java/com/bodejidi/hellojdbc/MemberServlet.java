@@ -170,9 +170,14 @@ public class MemberServlet extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
 
-        String id = req.getParameter(MEMBER_FORM_ID);
-        String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
-        String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
+        Member member = new Member();
+        member.setId(Long.valueOf(req.getParameter(MEMBER_FORM_ID)));
+        member.setFirstName(req.getParameter(MEMBER_FORM_FIRST_NAME));
+        member.setLastName(req.getParameter(MEMBER_FORM_LAST_NAME));
+
+        Long id = member.getId();
+        String firstName = member.getFirstName();
+        String lastName = member.getLastName();
 
         String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
         debug("SQL: " + sql);
@@ -182,7 +187,7 @@ public class MemberServlet extends HttpServlet {
         ds.close();
 
         req.setAttribute("flash.message",
-                         "Update id=" + id + ": " + firstName + " " + lastName + " success!");
+                         "Update id=" + member.getId() + ": " + member + " success!");
         forward("result", req, resp);
     }
 
