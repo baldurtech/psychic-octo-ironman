@@ -175,6 +175,14 @@ public class MemberServlet extends HttpServlet {
         member.setFirstName(req.getParameter(MEMBER_FORM_FIRST_NAME));
         member.setLastName(req.getParameter(MEMBER_FORM_LAST_NAME));
 
+        update(member);
+
+        req.setAttribute("flash.message",
+                         "Update id=" + member.getId() + ": " + member + " success!");
+        forward("result", req, resp);
+    }
+
+    public Member update(Member member) throws SQLException {
         Long id = member.getId();
         String firstName = member.getFirstName();
         String lastName = member.getLastName();
@@ -186,9 +194,7 @@ public class MemberServlet extends HttpServlet {
         ds.execute(sql);
         ds.close();
 
-        req.setAttribute("flash.message",
-                         "Update id=" + member.getId() + ": " + member + " success!");
-        forward("result", req, resp);
+        return member;
     }
 
     public Member getMemberById(String paramId)
