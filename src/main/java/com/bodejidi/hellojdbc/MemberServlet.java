@@ -14,18 +14,18 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
+import static com.bodejidi.hellojdbc.Constants.MEMBER_TABLE;
+import static com.bodejidi.hellojdbc.Constants.MEMBER_ID;
+import static com.bodejidi.hellojdbc.Constants.MEMBER_FIRST_NAME;
+import static com.bodejidi.hellojdbc.Constants.MEMBER_LAST_NAME;
+import static com.bodejidi.hellojdbc.Constants.MEMBER_FORM_ID;
+import static com.bodejidi.hellojdbc.Constants.MEMBER_FORM_FIRST_NAME;
+import static com.bodejidi.hellojdbc.Constants.MEMBER_FORM_LAST_NAME;
+import static com.bodejidi.hellojdbc.Constants.FORM_SUBMIT_ACTION;
+
 public class MemberServlet extends HttpServlet {
 
     static final Logger logger = LoggerFactory.getLogger(MemberServlet.class);
-
-    static final String MEMBER_TABLE = Constants.MEMBER_TABLE;
-    static final String MEMBER_ID = Constants.MEMBER_ID;
-    static final String MEMBER_FIRST_NAME = Constants.MEMBER_FIRST_NAME;
-    static final String MEMBER_LAST_NAME = Constants.MEMBER_LAST_NAME;
-    static final String MEMBER_FORM_ID = Constants.MEMBER_FORM_ID;
-    static final String MEMBER_FORM_FIRST_NAME = Constants.MEMBER_FORM_FIRST_NAME;
-    static final String MEMBER_FORM_LAST_NAME = Constants.MEMBER_FORM_LAST_NAME;
-    static final String FORM_SUBMIT_ACTION = Constants.FORM_SUBMIT_ACTION;
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter("action");
