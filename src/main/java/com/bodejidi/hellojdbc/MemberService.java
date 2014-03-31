@@ -44,6 +44,21 @@ public class MemberService {
         ds.close();
     }
 
+    public Member update(Member member) throws SQLException {
+        Long id = member.getId();
+        String firstName = member.getFirstName();
+        String lastName = member.getLastName();
+
+        String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
+        logger.debug("SQL: " + sql);
+
+        DatabaseService ds = DatabaseService.newInstance();
+        ds.execute(sql);
+        ds.close();
+
+        return member;
+    }
+
     public List<Member> findAllMember() throws SQLException {
         List<Member> memberList = new ArrayList<Member>();
 

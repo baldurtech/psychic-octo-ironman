@@ -155,26 +155,12 @@ public class MemberServlet extends HttpServlet {
         member.setFirstName(req.getParameter(MEMBER_FORM_FIRST_NAME));
         member.setLastName(req.getParameter(MEMBER_FORM_LAST_NAME));
 
-        update(member);
+        MemberService memberService = new MemberService();
+        memberService.update(member);
 
         req.setAttribute("flash.message",
                          "Update id=" + member.getId() + ": " + member + " success!");
         forward("result", req, resp);
-    }
-
-    public Member update(Member member) throws SQLException {
-        Long id = member.getId();
-        String firstName = member.getFirstName();
-        String lastName = member.getLastName();
-
-        String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
-        debug("SQL: " + sql);
-
-        DatabaseService ds = DatabaseService.newInstance();
-        ds.execute(sql);
-        ds.close();
-
-        return member;
     }
 
     /**
