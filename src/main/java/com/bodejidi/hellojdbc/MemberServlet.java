@@ -110,36 +110,38 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void save(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException, SQLException {
-
-        PrintWriter out = resp.getWriter();
+        throws IOException, ServletException {
 
         Member member = new Member();
         member.setFirstName(req.getParameter(MEMBER_FORM_FIRST_NAME));
         member.setLastName(req.getParameter(MEMBER_FORM_LAST_NAME));
 
         try {
-            String firstName = member.getFirstName();
-            String lastName = member.getLastName();
-
-            if(firstName == null || firstName.length() == 0 || lastName == null || lastName.length() == 0) {
-                throw new Exception("Member validator error!");
-            }
-
-            String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
-                + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-            debug("SQL: " + sql);
-            DatabaseService ds = DatabaseService.newInstance();
-            ds.execute(sql);
-            ds.close();
-
+            save(member);
             req.setAttribute("flash.message",
-                             "Add " + firstName + " " + lastName + " success!");
+                             "Add " + member + " success!");
         } catch(Exception e) {
             req.setAttribute("flash.errorMessage",
                              "Error: first name or last name cannot be empty.");
         }
         forward("result", req, resp);
+    }
+
+    public Member save(Member member) throws Exception {
+        String firstName = member.getFirstName();
+        String lastName = member.getLastName();
+
+        if(firstName == null || firstName.length() == 0 || lastName == null || lastName.length() == 0) {
+            throw new Exception("Member validator error!");
+        }
+
+        String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
+            + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+        debug("SQL: " + sql);
+        DatabaseService ds = DatabaseService.newInstance();
+        ds.execute(sql);
+        ds.close();
+        return member;
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp)
