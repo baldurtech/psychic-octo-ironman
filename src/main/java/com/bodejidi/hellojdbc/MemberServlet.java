@@ -119,7 +119,8 @@ public class MemberServlet extends HttpServlet {
         member.setLastName(req.getParameter(MEMBER_FORM_LAST_NAME));
 
         try {
-            save(member);
+            MemberService memberService = new MemberService();
+            memberService.save(member);
             req.setAttribute("flash.message",
                              "Add " + member + " success!");
         } catch(Exception e) {
@@ -127,23 +128,6 @@ public class MemberServlet extends HttpServlet {
                              "Error: first name or last name cannot be empty.");
         }
         forward("result", req, resp);
-    }
-
-    public Member save(Member member) throws Exception {
-        String firstName = member.getFirstName();
-        String lastName = member.getLastName();
-
-        if(firstName == null || firstName.length() == 0 || lastName == null || lastName.length() == 0) {
-            throw new Exception("Member validator error!");
-        }
-
-        String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
-            + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
-        debug("SQL: " + sql);
-        DatabaseService ds = DatabaseService.newInstance();
-        ds.execute(sql);
-        ds.close();
-        return member;
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp)
