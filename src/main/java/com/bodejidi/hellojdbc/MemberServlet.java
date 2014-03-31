@@ -82,7 +82,8 @@ public class MemberServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         try {
-            req.setAttribute("memberList", findAllMember());
+            MemberService memberService = new MemberService();
+            req.setAttribute("memberList", memberService.findAllMember());
             forward("list", req, resp);
         } catch (SQLException ex) {
             // handle any errors
@@ -213,29 +214,6 @@ public class MemberServlet extends HttpServlet {
         databaseService.close();
 
         return member;
-    }
-
-    public List<Member> findAllMember() throws SQLException {
-        List<Member> memberList = new ArrayList<Member>();
-
-        DatabaseService databaseService = DatabaseService.newInstance();
-
-        String sql = "SELECT * from " + MEMBER_TABLE;
-        debug("SQL: " + sql);
-
-        ResultSet rs = databaseService.executeQuery(sql);
-
-        while(rs.next()) {
-            Member member = new Member();
-            member.setId(rs.getLong(MEMBER_ID));
-            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-            member.setLastName(rs.getString(MEMBER_LAST_NAME));
-            memberList.add(member);
-        }
-
-        databaseService.close();
-
-        return memberList;
     }
 
     public void forward(String page,

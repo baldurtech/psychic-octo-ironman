@@ -1,7 +1,9 @@
 package com.bodejidi.hellojdbc;
 
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.bodejidi.hellojdbc.Constants.MEMBER_TABLE;
 import static com.bodejidi.hellojdbc.Constants.MEMBER_ID;
@@ -31,6 +33,29 @@ public class MemberService {
         ds.execute(sql);
         ds.close();
         return member;
+    }
+
+    public List<Member> findAllMember() throws SQLException {
+        List<Member> memberList = new ArrayList<Member>();
+
+        DatabaseService databaseService = DatabaseService.newInstance();
+
+        String sql = "SELECT * from " + MEMBER_TABLE;
+        logger.debug("SQL: " + sql);
+
+        ResultSet rs = databaseService.executeQuery(sql);
+
+        while(rs.next()) {
+            Member member = new Member();
+            member.setId(rs.getLong(MEMBER_ID));
+            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+            member.setLastName(rs.getString(MEMBER_LAST_NAME));
+            memberList.add(member);
+        }
+
+        databaseService.close();
+
+        return memberList;
     }
 
 }
