@@ -62,7 +62,8 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void debug(String str) {
-        System.out.println("[DEBUG] " + (new Date()) + " " + str);
+        String className = MemberServlet.class.getName();
+        System.out.println("[DEBUG] " + (new Date()) + " " + className + " " + str);
     }
 
     public String showLoginInfo(HttpServletRequest req) {
