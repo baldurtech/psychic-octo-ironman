@@ -167,8 +167,9 @@ public class MemberServlet extends HttpServlet {
         ds.execute(sql);
         ds.close();
 
-        out.println("Update id=" + id + ": " + firstName + " " + lastName + " success!");
-        out.println("<br/><a href=\"\">Member List</a>");
+        req.setAttribute("flash.message",
+                         "Update id=" + id + ": " + firstName + " " + lastName + " success!");
+        forward("result", req, resp);
     }
 
     public Member getMemberById(String paramId)
