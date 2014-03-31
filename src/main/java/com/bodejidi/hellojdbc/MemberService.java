@@ -35,6 +35,15 @@ public class MemberService {
         return member;
     }
 
+    public void deleteById(Long id) throws SQLException {
+        String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
+        logger.debug("SQL: " + sql);
+
+        DatabaseService ds = DatabaseService.newInstance();
+        ds.execute(sql);
+        ds.close();
+    }
+
     public List<Member> findAllMember() throws SQLException {
         List<Member> memberList = new ArrayList<Member>();
 

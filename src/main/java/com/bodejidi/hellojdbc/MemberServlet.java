@@ -137,19 +137,12 @@ public class MemberServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         String id = req.getParameter(MEMBER_FORM_ID);
-        deleteById(Long.valueOf(id));
+
+        MemberService memberService = new MemberService();
+        memberService.deleteById(Long.valueOf(id));
 
         req.setAttribute("flash.message", "Delete ID=" + id + " success!");
         forward("result", req, resp);
-    }
-
-    public void deleteById(Long id) throws SQLException {
-        String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
-        debug("SQL: " + sql);
-
-        DatabaseService ds = DatabaseService.newInstance();
-        ds.execute(sql);
-        ds.close();
     }
 
     public void update(HttpServletRequest req, HttpServletResponse resp)
