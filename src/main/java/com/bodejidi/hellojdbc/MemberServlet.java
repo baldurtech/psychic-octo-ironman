@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MemberServlet extends HttpServlet {
 
@@ -62,8 +64,8 @@ public class MemberServlet extends HttpServlet {
     }
 
     public void debug(String str) {
-        String className = MemberServlet.class.getName();
-        System.out.println("[DEBUG] " + (new Date()) + " " + className + " " + str);
+        Logger logger = LoggerFactory.getLogger(MemberServlet.class);
+        logger.debug(str);
     }
 
     public String showLoginInfo(HttpServletRequest req) {
