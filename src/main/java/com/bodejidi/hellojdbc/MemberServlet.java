@@ -114,8 +114,12 @@ public class MemberServlet extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
 
-        String firstName = req.getParameter(MEMBER_FORM_FIRST_NAME);
-        String lastName = req.getParameter(MEMBER_FORM_LAST_NAME);
+        Member member = new Member();
+        member.setFirstName(req.getParameter(MEMBER_FORM_FIRST_NAME));
+        member.setLastName(req.getParameter(MEMBER_FORM_LAST_NAME));
+
+        String firstName = member.getFirstName();
+        String lastName = member.getLastName();
 
         if(firstName != null && firstName.length() > 0 && lastName != null && lastName.length() > 0) {
             String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
