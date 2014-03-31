@@ -8,7 +8,7 @@ List<Member> memberList = (List<Member>) request.getAttribute("memberList");
     <title>Member List</title>
   </head>
   <body>
-    Welcome, admin. <a href="/hellojdbc/auth/logout">logout</a>
+    Welcome, admin. <a href="<%=request.getContextPath()%>/auth/logout">logout</a>
     <h1>所有会员</h1>
     <table border="1">
       <tr>
