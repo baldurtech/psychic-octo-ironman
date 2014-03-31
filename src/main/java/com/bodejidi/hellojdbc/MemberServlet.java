@@ -96,7 +96,7 @@ public class MemberServlet extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
         try {
-            String paramId = req.getParameter(MEMBER_FORM_ID);
+            Long paramId = Long.valueOf(req.getParameter(MEMBER_FORM_ID));
             Member member = getMemberById(paramId);
             req.setAttribute("member", member);
             forward("show", req, resp);
