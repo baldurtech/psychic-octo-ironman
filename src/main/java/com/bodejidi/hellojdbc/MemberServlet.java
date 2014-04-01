@@ -2,9 +2,6 @@ package com.bodejidi.hellojdbc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,12 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.sql.ResultSet;
 
-import static com.bodejidi.hellojdbc.Constants.MEMBER_TABLE;
-import static com.bodejidi.hellojdbc.Constants.MEMBER_ID;
-import static com.bodejidi.hellojdbc.Constants.MEMBER_FIRST_NAME;
-import static com.bodejidi.hellojdbc.Constants.MEMBER_LAST_NAME;
 import static com.bodejidi.hellojdbc.Constants.MEMBER_FORM_ID;
 import static com.bodejidi.hellojdbc.Constants.MEMBER_FORM_FIRST_NAME;
 import static com.bodejidi.hellojdbc.Constants.MEMBER_FORM_LAST_NAME;
