@@ -163,15 +163,6 @@ public class MemberServlet extends HttpServlet {
         forward("result", req, resp);
     }
 
-    /**
-     * @Deprecated
-     */
-    public Member getMemberById(String paramId)
-        throws SQLException {
-
-        return getMemberById(Long.valueOf(paramId));
-    }
-
     public Member getMemberById(Long paramId)
         throws SQLException {
 
