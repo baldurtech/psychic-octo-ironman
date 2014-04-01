@@ -100,7 +100,8 @@ public class MemberServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         try {
             Long paramId = Long.valueOf(req.getParameter(MEMBER_FORM_ID));
-            Member member = getMemberById(paramId);
+            MemberService memberService = new MemberService();
+            Member member = memberService.getMemberById(paramId);
             req.setAttribute("member", member);
             forward("show", req, resp);
         } catch (SQLException ex) {
@@ -161,29 +162,6 @@ public class MemberServlet extends HttpServlet {
         req.setAttribute("flash.message",
                          "Update id=" + member.getId() + ": " + member + " success!");
         forward("result", req, resp);
-    }
-
-    public Member getMemberById(Long paramId)
-        throws SQLException {
-
-        Member member = new Member();
-
-        String sql = "SELECT * from " + MEMBER_TABLE;
-        sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
-        debug("SQL: " + sql);
-
-        DatabaseService databaseService = DatabaseService.newInstance();
-
-        ResultSet rs = databaseService.executeQuery(sql);
-
-        rs.next();
-        member.setId(rs.getLong(MEMBER_ID));
-        member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-        member.setLastName(rs.getString(MEMBER_LAST_NAME));
-
-        databaseService.close();
-
-        return member;
     }
 
     public void forward(String page,

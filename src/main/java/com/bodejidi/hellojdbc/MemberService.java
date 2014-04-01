@@ -59,6 +59,29 @@ public class MemberService {
         return member;
     }
 
+    public Member getMemberById(Long paramId)
+        throws SQLException {
+
+        Member member = new Member();
+
+        String sql = "SELECT * from " + MEMBER_TABLE;
+        sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
+        logger.debug("SQL: " + sql);
+
+        DatabaseService databaseService = DatabaseService.newInstance();
+
+        ResultSet rs = databaseService.executeQuery(sql);
+
+        rs.next();
+        member.setId(rs.getLong(MEMBER_ID));
+        member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+        member.setLastName(rs.getString(MEMBER_LAST_NAME));
+
+        databaseService.close();
+
+        return member;
+    }
+
     public List<Member> findAllMember() throws SQLException {
         List<Member> memberList = new ArrayList<Member>();
 
