@@ -67,10 +67,6 @@ public class MemberServlet extends HttpServlet {
         logger.debug(str);
     }
 
-    public String showLoginInfo(HttpServletRequest req) {
-        return "Welcome, admin. <a href=\"" + req.getContextPath() + "/auth/logout\">logout</a>";
-    }
-
     public void create(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
         forward("create", req, resp);
