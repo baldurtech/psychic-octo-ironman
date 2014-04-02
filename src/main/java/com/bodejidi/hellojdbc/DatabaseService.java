@@ -10,6 +10,8 @@ import java.util.Date;
 
 public class DatabaseService {
 
+    static final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
+
     static final String jdbcUrl = "jdbc:mysql://localhost/hellojdbc?user=root&password=";
     static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
