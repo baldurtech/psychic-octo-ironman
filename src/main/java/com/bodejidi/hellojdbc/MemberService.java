@@ -59,12 +59,17 @@ public class MemberService {
         String firstName = member.getFirstName();
         String lastName = member.getLastName();
 
-        String sql = "update " + MEMBER_TABLE + " set " + MEMBER_FIRST_NAME + "='" + firstName + "', " + MEMBER_LAST_NAME + "='" + lastName + "' where " + MEMBER_ID + "="+id;
-        logger.debug("SQL: " + sql);
-
         DatabaseService ds = DatabaseService.newInstance();
-        ds.execute(sql);
-        ds.close();
+        try{
+            ds.prepare("UPDATE member SET first_name = ?, last_name = ? " +
+                       "WHERE id = ?")
+                .setString(firstName)
+                .setString(lastName)
+                .setLong(id)
+                .execute();
+        } finally {
+            ds.close();
+        }
 
         return member;
     }
