@@ -3,6 +3,7 @@ package com.bodejidi.hellojdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Date;
@@ -14,6 +15,7 @@ public class DatabaseService {
 
     private Connection conn = null;
     private Statement stmt = null;
+    private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
     private DatabaseService() {
@@ -63,6 +65,9 @@ public class DatabaseService {
 
         close(stmt);
         stmt = null;
+
+        close(pstmt);
+        pstmt = null;
 
         close(conn);
         conn = null;
