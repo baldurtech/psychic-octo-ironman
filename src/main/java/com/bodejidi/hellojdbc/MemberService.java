@@ -100,21 +100,22 @@ public class MemberService {
 
         DatabaseService databaseService = DatabaseService.newInstance();
 
-        String sql = "SELECT * from " + MEMBER_TABLE;
-        logger.debug("SQL: " + sql);
+        String sql = "SELECT * FROM member";
+        databaseService.executeQuery(sql);
 
-        ResultSet rs = databaseService.executeQuery(sql);
+        try {
+            ResultSet rs = databaseService.executeQuery(sql);
 
-        while(rs.next()) {
-            Member member = new Member();
-            member.setId(rs.getLong(MEMBER_ID));
-            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-            member.setLastName(rs.getString(MEMBER_LAST_NAME));
-            memberList.add(member);
+            while(rs.next()) {
+                Member member = new Member();
+                member.setId(rs.getLong(MEMBER_ID));
+                member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+                member.setLastName(rs.getString(MEMBER_LAST_NAME));
+                memberList.add(member);
+            }
+        } finally {
+            databaseService.close();
         }
-
-        databaseService.close();
-
         return memberList;
     }
 
