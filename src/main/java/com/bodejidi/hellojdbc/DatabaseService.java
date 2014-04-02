@@ -79,6 +79,7 @@ public class DatabaseService {
     public ResultSet executeQuery(String sql)
         throws SQLException {
 
+        logger.debug("Execute query " + sql);
         return stmt.executeQuery(sql);
     }
 
