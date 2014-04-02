@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.Date;
 
 public class DatabaseService {
 
@@ -27,6 +28,21 @@ public class DatabaseService {
         databaseService.stmt = databaseService.conn.createStatement();
 
         return databaseService;
+    }
+
+    public DatabaseService prepare(String sql) {
+        return this;
+    }
+
+    public DatabaseService setString(String param) {
+        return this;
+    }
+
+    public DatabaseService setDate(Date param) {
+        return this;
+    }
+
+    public void execute() {
     }
 
     public ResultSet executeQuery(String sql)
