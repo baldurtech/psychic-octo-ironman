@@ -79,21 +79,19 @@ public class MemberService {
 
         Member member = new Member();
 
-        String sql = "SELECT * from " + MEMBER_TABLE;
-        sql = sql + " WHERE " + MEMBER_ID + "=" + paramId;
-        logger.debug("SQL: " + sql);
+        DatabaseService ds = DatabaseService.newInstance();
 
-        DatabaseService databaseService = DatabaseService.newInstance();
+        try {
+            ResultSet rs = ds.prepare("SELECT * FROM member where id = ?")
+                .setLong(paramId).executeQuery();
 
-        ResultSet rs = databaseService.executeQuery(sql);
-
-        rs.next();
-        member.setId(rs.getLong(MEMBER_ID));
-        member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
-        member.setLastName(rs.getString(MEMBER_LAST_NAME));
-
-        databaseService.close();
-
+            rs.next();
+            member.setId(rs.getLong(MEMBER_ID));
+            member.setFirstName(rs.getString(MEMBER_FIRST_NAME));
+            member.setLastName(rs.getString(MEMBER_LAST_NAME));
+        } finally {
+            ds.close();
+        }
         return member;
     }
 
