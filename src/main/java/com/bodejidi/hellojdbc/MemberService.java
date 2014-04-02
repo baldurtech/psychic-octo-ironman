@@ -44,12 +44,14 @@ public class MemberService {
     }
 
     public void deleteById(Long id) throws SQLException {
-        String sql = "DELETE FROM " + MEMBER_TABLE + " where " + MEMBER_ID + "=" + id;
-        logger.debug("SQL: " + sql);
-
         DatabaseService ds = DatabaseService.newInstance();
-        ds.execute(sql);
-        ds.close();
+        try {
+            ds.prepare("DELETE FROM member where id = ?")
+                .setLong(id)
+                .execute();
+        } finally {
+            ds.close();
+        }
     }
 
     public Member update(Member member) throws SQLException {
