@@ -27,19 +27,9 @@ public class MemberService {
             throw new Exception("Member validator error!");
         }
 
-        String sql = "INSERT INTO member (first_name, last_name, date_created, last_updated) VALUES(?, ?, ?, ?)";
-        DatabaseService ds = DatabaseService.newInstance();
+        MemberDao memberDao = new MemberDao();
+        member = memberDao.save(member);
 
-        try {
-            ds.prepare(sql)
-                .setString(firstName)
-                .setString(lastName)
-                .setDate(new Date())
-                .setDate(new Date())
-                .execute();
-        } finally {
-            ds.close();
-        }
         return member;
     }
 
