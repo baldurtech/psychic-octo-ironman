@@ -39,24 +39,28 @@ public class DatabaseService {
     }
 
     public DatabaseService prepare(String sql) throws SQLException {
+        logger.trace("Prepare statement: " + sql);
         pstmt = conn.prepareStatement(sql);
         parameterIndex = 1;
         return this;
     }
 
     public DatabaseService setString(String param) throws SQLException {
+        logger.trace("Set parameter value " + parameterIndex + " to String '" + param + "'");
         pstmt.setString(parameterIndex, param);
         parameterIndex ++;
         return this;
     }
 
     public DatabaseService setDate(Date date) throws SQLException {
+        logger.trace("Set parameter value " + parameterIndex + " to Date '" + date + "'");
         pstmt.setDate(parameterIndex, new java.sql.Date(date.getTime()));
         parameterIndex ++;
         return this;
     }
 
     public Boolean execute() throws SQLException {
+        logger.debug("Execute preparedStatement " + pstmt);
         return pstmt.execute();
     }
 
