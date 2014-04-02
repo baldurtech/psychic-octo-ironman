@@ -3,6 +3,7 @@ package com.bodejidi.hellojdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.bodejidi.hellojdbc.Constants.MEMBER_TABLE;
@@ -26,11 +27,17 @@ public class MemberService {
             throw new Exception("Member validator error!");
         }
 
-        String sql = "INSERT INTO " + MEMBER_TABLE+ "(" + MEMBER_FIRST_NAME + ", " + MEMBER_LAST_NAME + ", date_created, last_updated) "
-            + "VALUES('" + firstName + "', '" + lastName + "', now(), now());";
+        String sql = "INSERT INTO member (first_name, last_name, date_created, last_updated) VALUES(?, ?, ?, ?)";
         logger.debug("SQL: " + sql);
         DatabaseService ds = DatabaseService.newInstance();
-        ds.execute(sql);
+
+        ds.prepare(sql)
+            .setString(firstName)
+            .setString(lastName)
+            .setDate(new Date())
+            .setDate(new Date())
+            .execute();
+
         ds.close();
         return member;
     }
