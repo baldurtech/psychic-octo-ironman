@@ -52,6 +52,13 @@ public class DatabaseService {
         return this;
     }
 
+    public DatabaseService setLong(Long param) throws SQLException {
+        logger.trace("Set parameter value " + parameterIndex + " to Long '" + param + "'");
+        pstmt.setLong(parameterIndex, param);
+        parameterIndex ++;
+        return this;
+    }
+
     public DatabaseService setDate(Date date) throws SQLException {
         logger.trace("Set parameter value " + parameterIndex + " to Date '" + date + "'");
         pstmt.setDate(parameterIndex, new java.sql.Date(date.getTime()));
