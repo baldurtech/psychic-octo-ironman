@@ -71,6 +71,11 @@ public class DatabaseService {
         return pstmt.execute();
     }
 
+    public ResultSet executeQuery() throws SQLException {
+        logger.debug("Execute preparedStatement " + pstmt);
+        return pstmt.executeQuery();
+    }
+
     public ResultSet executeQuery(String sql)
         throws SQLException {
 
