@@ -18,6 +18,8 @@ public class DatabaseService {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
+    private Integer parameterIndex;
+
     private DatabaseService() {
     }
 
@@ -32,19 +34,26 @@ public class DatabaseService {
         return databaseService;
     }
 
-    public DatabaseService prepare(String sql) {
+    public DatabaseService prepare(String sql) throws SQLException {
+        pstmt = conn.prepareStatement(sql);
+        parameterIndex = 1;
         return this;
     }
 
-    public DatabaseService setString(String param) {
+    public DatabaseService setString(String param) throws SQLException {
+        pstmt.setString(parameterIndex, param);
+        parameterIndex ++;
         return this;
     }
 
-    public DatabaseService setDate(Date param) {
+    public DatabaseService setDate(Date date) throws SQLException {
+        pstmt.setDate(parameterIndex, new java.sql.Date(date.getTime()));
+        parameterIndex ++;
         return this;
     }
 
-    public void execute() {
+    public Boolean execute() throws SQLException {
+        return pstmt.execute();
     }
 
     public ResultSet executeQuery(String sql)
