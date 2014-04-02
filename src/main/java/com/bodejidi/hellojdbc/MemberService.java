@@ -31,14 +31,16 @@ public class MemberService {
         logger.debug("SQL: " + sql);
         DatabaseService ds = DatabaseService.newInstance();
 
-        ds.prepare(sql)
-            .setString(firstName)
-            .setString(lastName)
-            .setDate(new Date())
-            .setDate(new Date())
-            .execute();
-
-        ds.close();
+        try {
+            ds.prepare(sql)
+                .setString(firstName)
+                .setString(lastName)
+                .setDate(new Date())
+                .setDate(new Date())
+                .execute();
+        } finally {
+            ds.close();
+        }
         return member;
     }
 
