@@ -25,14 +25,16 @@ public class DatabaseService {
     private DatabaseService() {
     }
 
-    static public DatabaseService newInstance()
-        throws SQLException {
+    static public DatabaseService newInstance() {
 
         DatabaseService databaseService = new DatabaseService();
 
-        databaseService.conn = databaseService.createConnection();
-        databaseService.stmt = databaseService.conn.createStatement();
-
+        try {
+            databaseService.conn = databaseService.createConnection();
+            databaseService.stmt = databaseService.conn.createStatement();
+        } catch(SQLException e) {
+            logger.error("Cannot init databaseService", e);
+        }
         return databaseService;
     }
 
