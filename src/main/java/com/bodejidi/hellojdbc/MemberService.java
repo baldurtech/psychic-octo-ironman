@@ -28,7 +28,6 @@ public class MemberService {
         }
 
         String sql = "INSERT INTO member (first_name, last_name, date_created, last_updated) VALUES(?, ?, ?, ?)";
-        logger.debug("SQL: " + sql);
         DatabaseService ds = DatabaseService.newInstance();
 
         try {
