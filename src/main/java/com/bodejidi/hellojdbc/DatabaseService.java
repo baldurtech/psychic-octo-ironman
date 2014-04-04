@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Date;
 
@@ -16,7 +15,6 @@ public class DatabaseService {
     static final String jdbcDriver = "com.mysql.jdbc.Driver";
 
     private Connection conn = null;
-    private Statement stmt = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
@@ -78,24 +76,21 @@ public class DatabaseService {
     public ResultSet executeQuery(String sql)
         throws SQLException {
 
-        stmt = conn.createStatement();
+        prepare(sql);
         logger.debug("Execute query " + sql);
-        return stmt.executeQuery(sql);
+        return executeQuery();
     }
 
     public void execute(String sql)
         throws SQLException {
 
-        stmt = conn.createStatement();
-        stmt.execute(sql);
+        prepare(sql);
+        execute();
     }
 
     public void close() {
         close(rs);
         rs = null;
-
-        close(stmt);
-        stmt = null;
 
         close(pstmt);
         pstmt = null;
