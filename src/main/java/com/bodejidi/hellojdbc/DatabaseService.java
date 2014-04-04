@@ -81,7 +81,7 @@ public class DatabaseService {
         return executeQuery();
     }
 
-    public void execute(String sql, Object... params)
+    public Boolean execute(String sql, Object... params)
         throws SQLException {
 
         prepare(sql);
@@ -94,7 +94,7 @@ public class DatabaseService {
                 setDate((Date) param);
             }
         }
-        execute();
+        return execute();
     }
 
     public void close() {
