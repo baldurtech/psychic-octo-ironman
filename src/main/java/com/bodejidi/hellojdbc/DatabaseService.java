@@ -31,7 +31,6 @@ public class DatabaseService {
 
         try {
             databaseService.conn = databaseService.createConnection();
-            databaseService.stmt = databaseService.conn.createStatement();
         } catch(SQLException e) {
             logger.error("Cannot init databaseService", e);
         }
@@ -79,6 +78,7 @@ public class DatabaseService {
     public ResultSet executeQuery(String sql)
         throws SQLException {
 
+        stmt = conn.createStatement();
         logger.debug("Execute query " + sql);
         return stmt.executeQuery(sql);
     }
@@ -86,6 +86,7 @@ public class DatabaseService {
     public void execute(String sql)
         throws SQLException {
 
+        stmt = conn.createStatement();
         stmt.execute(sql);
     }
 
