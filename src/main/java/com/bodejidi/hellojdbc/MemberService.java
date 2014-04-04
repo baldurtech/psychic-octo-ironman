@@ -36,9 +36,7 @@ public class MemberService {
     public void deleteById(Long id) throws SQLException {
         DatabaseService ds = DatabaseService.newInstance();
         try {
-            ds.prepare("DELETE FROM member where id = ?")
-                .setLong(id)
-                .execute();
+            ds.execute("DELETE FROM member where id = ?", id);
         } finally {
             ds.close();
         }
@@ -51,12 +49,8 @@ public class MemberService {
 
         DatabaseService ds = DatabaseService.newInstance();
         try{
-            ds.prepare("UPDATE member SET first_name = ?, last_name = ? " +
-                       "WHERE id = ?")
-                .setString(firstName)
-                .setString(lastName)
-                .setLong(id)
-                .execute();
+            ds.execute("UPDATE member SET first_name=?, last_name=? WHERE id=?",
+                       firstName, lastName, id);
         } finally {
             ds.close();
         }
