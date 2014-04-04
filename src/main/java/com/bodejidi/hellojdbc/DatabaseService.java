@@ -81,10 +81,19 @@ public class DatabaseService {
         return executeQuery();
     }
 
-    public void execute(String sql)
+    public void execute(String sql, Object... params)
         throws SQLException {
 
         prepare(sql);
+        for(Object param: params) {
+            if(param instanceof String) {
+                setString((String) param);
+            } else if(param instanceof Long) {
+                setLong((Long) param);
+            } else if(param instanceof Date) {
+                setDate((Date) param);
+            }
+        }
         execute();
     }
 
